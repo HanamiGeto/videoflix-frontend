@@ -1,0 +1,40 @@
+<h1>Videoflix</h1>
+<div class="login-registration-modal">
+  <h2>Sign up</h2>
+  <form [formGroup]="form">
+    <div class="input-container">
+      <label for="username"></label>
+      <input formControlName="username" id="username" placeholder="Username" />
+      <vf-form-errors
+        controlName="username"
+        [messages]="{ required: 'Your username is required' }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <label for="email"></label>
+      <input formControlName="email" id="email" placeholder="Email address" />
+      <vf-form-errors
+        controlName="email"
+        [messages]="{
+          required: 'Your email is required',
+          invalidemail: 'Please enter a valid email'
+        }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <label for="password"></label>
+      <input
+        formControlName="password"
+        type="password"
+        id="password"
+        placeholder="Passwort"
+      />
+      <vf-form-errors
+        controlName="password"
+        [messages]="{ required: 'Your password is required' }"
+      ></vf-form-errors>
+    </div>
+    <button>Sign up</button>
+  </form>
+  <div>Already have an account? <a routerLink="/">Sign in now</a></div>
+</div>
