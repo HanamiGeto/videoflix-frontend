@@ -1,6 +1,10 @@
 html,
 body {
   margin: 0;
+  color: white;
+}
+
+body {
   height: 100vh;
 }
 
@@ -10,7 +14,6 @@ body {
   align-self: center;
   height: 500px;
   width: 400px;
-  color: white;
   padding: 50px;
   justify-content: space-between;
   background: rgba($color: #000000, $alpha: 0.5);

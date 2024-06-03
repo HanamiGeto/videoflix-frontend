@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  // background-color: rgba(155, 52, 52, 0.171);
+  background-color: transparent;
+  margin-top: -200px;
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  height: 150px;
+  width: 300px;
+  border-radius: 5px;
+  cursor: pointer;
+}

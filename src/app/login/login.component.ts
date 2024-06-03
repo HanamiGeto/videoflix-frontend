@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
 import {
   FormControl,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { customEmailValidator } from '../validators';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'vf-login',
@@ -17,6 +18,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  private authService = inject(AuthService);
+
   form = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
@@ -27,4 +30,9 @@ export class LoginComponent {
       validators: Validators.required,
     }),
   });
+
+  onSubmit() {
+    const formValue = this.form.getRawValue();
+    this.authService.login(formValue);
+  }
 }

@@ -1,7 +1,7 @@
 <h1>Videoflix</h1>
 <div class="login-registration-modal">
   <h2>Sign up</h2>
-  <form [formGroup]="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="input-container">
       <label for="username"></label>
       <input formControlName="username" id="username" placeholder="Username" />
@@ -27,14 +27,14 @@
         formControlName="password"
         type="password"
         id="password"
-        placeholder="Passwort"
+        placeholder="Password"
       />
       <vf-form-errors
         controlName="password"
         [messages]="{ required: 'Your password is required' }"
       ></vf-form-errors>
     </div>
-    <button>Sign up</button>
+    <button type="submit">Sign up</button>
   </form>
   <div>Already have an account? <a routerLink="/">Sign in now</a></div>
 </div>

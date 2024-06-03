@@ -1,0 +1,35 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 10%, transparent);
+
+  a {
+    color: rgb(230, 230, 230);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+
+    &:hover {
+      color: rgb(180, 180, 180);
+      transition: all 350ms ease;
+    }
+  }
+
+  div {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+
+  h2 {
+    margin: 0;
+  }
+}

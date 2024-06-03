@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
 import { customEmailValidator } from '../validators';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'vf-registration',
@@ -17,6 +18,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './registration.component.scss',
 })
 export class RegistrationComponent {
+  private authService = inject(AuthService);
+
   form = new FormGroup({
     username: new FormControl('', {
       nonNullable: true,
@@ -31,4 +34,10 @@ export class RegistrationComponent {
       validators: Validators.required,
     }),
   });
+
+  onSubmit() {
+    const formValue = this.form.getRawValue();
+    // console.log(formValue)
+    this.authService.register(formValue);
+  }
 }
