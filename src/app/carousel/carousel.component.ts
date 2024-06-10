@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, afterNextRender } from '@angular/core';
 import Swiper from 'swiper/bundle';
 
 @Component({
@@ -8,27 +8,25 @@ import Swiper from 'swiper/bundle';
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
-export class CarouselComponent implements AfterViewInit {
-  @ViewChild('swiper') swiper!: ElementRef;
+export class CarouselComponent {
+  @ViewChild('swiper') private swiper!: ElementRef;
 
-  ngAfterViewInit(): void {
-    this.initSwiper();
-  }
-
-  private initSwiper() {
-    return new Swiper(this.swiper.nativeElement, {
-      slidesPerView: 6,
-      slidesPerGroup: 6,
-      loop: true,
-      spaceBetween: 5,
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-      },
+  constructor() {
+    afterNextRender(() => {
+      return new Swiper(this.swiper.nativeElement, {
+        slidesPerView: 6,
+        slidesPerGroup: 6,
+        loop: true,
+        spaceBetween: 5,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'bullets',
+        },
+      })
     })
   }
 }
