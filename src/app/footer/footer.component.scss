@@ -1,0 +1,16 @@
+:host {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+}
+
+a {
+  color: rgb(180, 180, 180);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
