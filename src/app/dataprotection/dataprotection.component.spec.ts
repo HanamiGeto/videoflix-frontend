@@ -8,10 +8,9 @@ describe('DataprotectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DataprotectionComponent]
-    })
-    .compileComponents();
-    
+      imports: [DataprotectionComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DataprotectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

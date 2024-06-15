@@ -1,13 +1,47 @@
 <h4>New on Videoflix</h4>
-<div #swiper class="swiper">
-  <div class="swiper-wrapper">
-    @for (item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]; track $index) {
-      <div class="swiper-slide card swiper-no-swiping">
-        <div>{{ item }}</div>
-      </div>
-    }
+<div class="swiper-container">
+  <div #swiper class="swiper">
+    <div class="swiper-wrapper">
+      @for (
+        item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+        track $index
+      ) {
+        <div
+          class="swiper-slide card swiper-no-swiping"
+          (mouseover)="showPreviewOnHover = true"
+        >
+          <div>{{ item }}</div>
+        </div>
+
+      }
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  @if (showPreviewOnHover) {
+    <div
+      class="preview-modal-container"
+      @onHover
+      (mouseleave)="showPreviewOnHover = false"
+    >
+      <div class="preview-modal-content">
+        <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus,
+          ut.
+        </div>
+        <div class="preview-video"></div>
+      </div>
+      <div class="preview-modal-info-container" @onHoverChild>
+        <div class="preview-modal-buttons-left-container">
+          <button class="preview-modal-buttons">
+            <img src="play-24.png" alt="Play Button" />
+          </button>
+          <button class="preview-modal-buttons">List</button>
+          <button class="preview-modal-buttons">Like</button>
+        </div>
+        <button class="preview-modal-buttons">Info</button>
+      </div>
+    </div>
+  }
 </div>
