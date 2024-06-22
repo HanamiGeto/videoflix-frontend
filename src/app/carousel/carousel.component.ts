@@ -38,7 +38,7 @@ import { PreviewModalComponent } from '../preview-modal/preview-modal.component'
                 'translateX(0px) translateY(1.4964px) scaleX(1) scaleY(1) translateZ(0px)',
             }),
           ),
-        ])
+        ]),
       ]),
       transition(':leave', [
         group([
@@ -50,20 +50,18 @@ import { PreviewModalComponent } from '../preview-modal/preview-modal.component'
                 'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
             }),
           ),
-        ])
-      ])
+        ]),
+      ]),
     ]),
     trigger('onHoverChild', [
       transition(':enter', [
         style({
           opacity: 0,
         }),
-        animate('150ms 450ms ease-in', style({opacity: 1})),
+        animate('150ms 450ms ease-in', style({ opacity: 1 })),
       ]),
-      transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0}))
-      ])
-    ])
+      transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
+    ]),
   ],
 })
 export class CarouselComponent {
