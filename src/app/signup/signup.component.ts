@@ -7,18 +7,19 @@ import {
 } from '@angular/forms';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
 import { customEmailValidator } from '../validators';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
-  selector: 'vf-registration',
+  selector: 'vf-signup',
   standalone: true,
   imports: [ReactiveFormsModule, FormErrorsComponent, RouterLink],
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.scss',
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss',
 })
-export class RegistrationComponent {
+export class SignupComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -38,6 +39,12 @@ export class RegistrationComponent {
   onSubmit() {
     const formValue = this.form.getRawValue();
     // console.log(formValue)
-    this.authService.register(formValue);
+    // this.authService.signup(formValue);
+    if (this.form.valid) {
+      this.authService.signup(formValue).subscribe((data) => {
+        this.router.navigate(['/login']);
+        console.log(data);
+      });
+    }
   }
 }
