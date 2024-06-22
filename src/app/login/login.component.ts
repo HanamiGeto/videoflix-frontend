@@ -35,11 +35,10 @@ export class LoginComponent {
   onSubmit() {
     const formValue = this.form.getRawValue();
     if (this.form.valid) {
-      this.authService.login(formValue).subscribe((data) => {
+      this.authService.login(formValue).subscribe(() => {
         if (this.authService.isLoggedIn()) {
           this.router.navigate(['/browse']);
         }
-        console.log(data);
       });
     }
   }
