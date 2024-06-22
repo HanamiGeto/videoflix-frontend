@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { SignupComponent } from './signup/signup.component';
 import { BrowseComponent } from './browse/browse.component';
 import { DataprotectionComponent } from './dataprotection/dataprotection.component';
 import { ImprintComponent } from './imprint/imprint.component';
+import { authGuard } from './shared/auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: BrowseComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'browse', component: BrowseComponent, canActivate: [authGuard] },
   { path: 'data-protection', component: DataprotectionComponent },
   { path: 'imprint', component: ImprintComponent },
 ];
