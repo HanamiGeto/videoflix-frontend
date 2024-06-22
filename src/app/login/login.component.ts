@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { customEmailValidator } from '../validators';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
@@ -19,6 +19,7 @@ import { AuthService } from '../shared/auth.service';
 })
 export class LoginComponent {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -33,6 +34,13 @@ export class LoginComponent {
 
   onSubmit() {
     const formValue = this.form.getRawValue();
-    this.authService.login(formValue);
+    if (this.form.valid) {
+      this.authService.login(formValue).subscribe((data) => {
+        if (this.authService.isLoggedIn()) {
+          this.router.navigate(['/browse']);
+        }
+        console.log(data);
+      });
+    }
   }
 }
