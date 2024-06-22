@@ -42,3 +42,5 @@ testem.log
 Thumbs.db
 
 up.bat
+
+src/environments
