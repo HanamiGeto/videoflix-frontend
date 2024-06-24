@@ -1,3 +1,6 @@
+@if (video$ | async; as video) {
+  <video [src]="apiUrl + video.video_file" autoplay [muted]="'muted'"></video>
+}
 <div class="video-info-container">
   <h3>Videotitle</h3>
   <p>

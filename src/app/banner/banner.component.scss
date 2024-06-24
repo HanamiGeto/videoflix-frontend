@@ -1,8 +1,14 @@
 :host {
   display: flex;
+  position: relative;
   // background-image: url('../../../public/milky-way-2695569_1920.jpg');
   background-color: rgb(238, 101, 101);
   min-height: 95%;
+}
+
+video {
+  position: absolute;
+  width: 100%;
 }
 
 .video-info-container {
@@ -11,6 +17,7 @@
   width: 40%;
   align-self: center;
   padding-left: 40px;
+  z-index: 5;
 
   h3 {
     font-size: 2vw;
