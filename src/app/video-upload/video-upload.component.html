@@ -1,1 +1,54 @@
-<p>video-upload works!</p>
+<vf-header></vf-header>
+<div class="form-modal">
+  <h2>Video upload</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <label for="title"></label>
+      <input formControlName="title" id="title" placeholder="Title" />
+      <vf-form-errors
+        controlName="title"
+        [messages]="{ required: 'Your title is required' }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <label for="description"></label>
+      <input
+        formControlName="description"
+        id="description"
+        placeholder="Description"
+      />
+      <vf-form-errors
+        controlName="description"
+        [messages]="{
+          required: 'Your description is required'
+        }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <label for="genre"></label>
+      <select formControlName="genre" id="genre" placeholder="Genre">
+        @for (genre of genres; track $index) {
+          <option [value]="genre">{{ genre }}</option>
+        }
+      </select>
+      <vf-form-errors
+        controlName="genre"
+        [messages]="{ required: 'Your genre is required' }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <label for="video_file"></label>
+      <input
+        formControlName="video_file"
+        type="file"
+        id="video_file"
+        (change)="onFileSelected($event)"
+      />
+      <vf-form-errors
+        controlName="video_file"
+        [messages]="{ required: 'Your Video is required' }"
+      ></vf-form-errors>
+    </div>
+    <button type="submit">Upload</button>
+  </form>
+</div>
