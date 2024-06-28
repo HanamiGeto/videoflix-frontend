@@ -2,8 +2,9 @@ import { Component, inject, input } from '@angular/core';
 import { VideoService } from '../shared/video.service';
 import { AsyncPipe } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { VideoUrlPipe } from '../shared/video-url.pipe';
+import { Video } from '../shared/video';
 
 @Component({
   selector: 'vf-banner',
@@ -14,9 +15,9 @@ import { VideoUrlPipe } from '../shared/video-url.pipe';
 })
 export class BannerComponent {
   videoService = inject(VideoService);
-  id = input(24);
+  id = input(4);
 
-  video$ = toObservable(this.id).pipe(
+  video$: Observable<Video> = toObservable(this.id).pipe(
     switchMap((id) => this.videoService.getSingle(id)),
   );
 }

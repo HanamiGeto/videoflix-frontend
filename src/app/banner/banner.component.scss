@@ -3,13 +3,23 @@
   position: relative;
   // background-image: url('../../../public/milky-way-2695569_1920.jpg');
   background-color: rgb(238, 101, 101);
+  // width: 100%;
   min-height: 95%;
 }
 
-video {
+.show-video-and-thumbnail {
   position: absolute;
+  // height: 100%;
+  // width: 100%;
   width: 100%;
 }
+
+// video {
+//   position: absolute;
+//   // height: 100%;
+//   // width: 100%;
+//   width: 100%;
+// }
 
 .video-info-container {
   display: flex;

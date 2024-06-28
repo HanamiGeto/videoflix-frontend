@@ -1,22 +1,29 @@
 @if (video$ | async; as video) {
-  <video [src]="video.video_file | videoUrl" autoplay [muted]="'muted'"></video>
-}
-<div class="video-info-container">
-  <h3>Videotitle</h3>
-  <p>
-    Videodescription Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    Ipsa, enim praesentium obcaecati quos quod, doloremque magnam accusamus, vel
-    velit consequatur molestiae explicabo officiis modi iste accusantium
-    tempore? Vel, nobis ex?
-  </p>
-  <div class="button-container">
-    <button class="play-info-button">
-      <img src="play-24.png" alt="Play Icon" />
-      Play
-    </button>
-    <button class="play-info-button">
-      <img src="info-2-24.png" alt="More Info Icon" />
-      More Info
-    </button>
+  <video
+    class="show-video-and-thumbnail"
+    [src]="video.video_file_resolutions._1080p | videoUrl"
+    autoplay
+    [muted]="'muted'"
+  ></video>
+  <!-- <img
+    class="show-video-and-thumbnail"
+    [src]="video.thumbnail_file | videoUrl"
+    alt=""
+  /> -->
+  <div class="video-info-container">
+    <h3>{{ video.title }}</h3>
+    <p>
+      {{ video.description }}
+    </p>
+    <div class="button-container">
+      <button class="play-info-button">
+        <img src="play-24.png" alt="Play Icon" />
+        Play
+      </button>
+      <button class="play-info-button">
+        <img src="info-2-24.png" alt="More Info Icon" />
+        More Info
+      </button>
+    </div>
   </div>
-</div>
+}
