@@ -38,8 +38,6 @@ export class SignupComponent {
 
   onSubmit() {
     const formValue = this.form.getRawValue();
-    // console.log(formValue)
-    // this.authService.signup(formValue);
     if (this.form.valid) {
       this.authService.signup(formValue).subscribe((data) => {
         this.router.navigate(['/login']);
