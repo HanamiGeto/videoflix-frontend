@@ -12,5 +12,9 @@ import { FooterComponent } from './footer/footer.component';
 export class AppComponent {
   title = 'videoflix';
   router = inject(Router);
-  // route = inject(rote)
+
+  shouldDisplayFooter(): boolean {
+    const url = this.router.url;
+    return !(url === '/browse' || '/watch/:id');
+  }
 }

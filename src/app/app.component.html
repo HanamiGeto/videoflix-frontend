@@ -1,4 +1,4 @@
 <router-outlet></router-outlet>
-@if (router.url !== "/browse") {
+@if (shouldDisplayFooter()) {
   <vf-footer></vf-footer>
 }
