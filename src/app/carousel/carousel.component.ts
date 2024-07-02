@@ -10,16 +10,20 @@ import {
 import {
   Component,
   ElementRef,
-  ViewChild,
-  afterNextRender,
+  effect,
+  inject,
+  viewChild,
 } from '@angular/core';
 import Swiper from 'swiper/bundle';
 import { PreviewModalComponent } from '../preview-modal/preview-modal.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { VideoService } from '../shared/video.service';
+import { VideoUrlPipe } from '../shared/video-url.pipe';
 
 @Component({
   selector: 'vf-carousel',
   standalone: true,
-  imports: [PreviewModalComponent],
+  imports: [PreviewModalComponent, VideoUrlPipe],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [
@@ -65,12 +69,21 @@ import { PreviewModalComponent } from '../preview-modal/preview-modal.component'
   ],
 })
 export class CarouselComponent {
-  @ViewChild('swiper') private swiper!: ElementRef;
+  swiper = viewChild<ElementRef>('swiper');
   showPreviewOnHover = false;
+  videos = toSignal(inject(VideoService).getAll());
 
   constructor() {
-    afterNextRender(() => {
-      return new Swiper(this.swiper.nativeElement, {
+    effect(() => {
+      if (this.videos()) {
+        this.initializeSwiper();
+      }
+    });
+  }
+
+  initializeSwiper(): void {
+    if (this.swiper()) {
+      new Swiper(this.swiper()!.nativeElement, {
         slidesPerView: 6,
         slidesPerGroup: 6,
         loop: true,
@@ -84,6 +97,6 @@ export class CarouselComponent {
           type: 'bullets',
         },
       });
-    });
+    }
   }
 }
