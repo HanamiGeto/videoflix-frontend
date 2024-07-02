@@ -6,6 +6,7 @@ import { DataprotectionComponent } from './dataprotection/dataprotection.compone
 import { ImprintComponent } from './imprint/imprint.component';
 import { authGuard } from './shared/auth.guard';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
+import { WatchComponent } from './watch/watch.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,6 +14,11 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'browse', component: BrowseComponent, canActivate: [authGuard] },
   { path: 'upload', component: VideoUploadComponent, canActivate: [authGuard] },
+  {
+    path: 'watch/:id',
+    component: WatchComponent,
+    canActivate: [authGuard],
+  },
   { path: 'data-protection', component: DataprotectionComponent },
   { path: 'imprint', component: ImprintComponent },
 ];
