@@ -4,7 +4,7 @@
   <div class="swiper-container">
     <div #swiper class="swiper">
       <div class="swiper-wrapper">
-        @for (video of videos; track $index) {
+        @for (video of videos; track video.id) {
           <div
             class="swiper-slide card swiper-no-swiping"
             (mouseover)="showPreviewOnHover = true"
