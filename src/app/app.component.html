@@ -1,2 +1,4 @@
 <router-outlet></router-outlet>
-<vf-footer></vf-footer>
+@if (router.url !== "/browse") {
+  <vf-footer></vf-footer>
+}

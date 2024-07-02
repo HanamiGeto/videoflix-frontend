@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 
 @Component({
@@ -11,4 +11,6 @@ import { FooterComponent } from './footer/footer.component';
 })
 export class AppComponent {
   title = 'videoflix';
+  router = inject(Router);
+  // route = inject(rote)
 }
