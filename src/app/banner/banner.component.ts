@@ -5,11 +5,12 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable, switchMap } from 'rxjs';
 import { VideoUrlPipe } from '../shared/video-url.pipe';
 import { Video } from '../shared/video';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'vf-banner',
   standalone: true,
-  imports: [AsyncPipe, VideoUrlPipe],
+  imports: [AsyncPipe, VideoUrlPipe, RouterLink],
   templateUrl: './banner.component.html',
   styleUrl: './banner.component.scss',
 })

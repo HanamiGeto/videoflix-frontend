@@ -16,10 +16,10 @@
       {{ video.description }}
     </p>
     <div class="button-container">
-      <button class="play-info-button">
+      <a class="play-info-button" [routerLink]="['/watch', video.id]">
         <img src="play-24.png" alt="Play Icon" />
         Play
-      </button>
+      </a>
       <button class="play-info-button">
         <img src="info-2-24.png" alt="More Info Icon" />
         More Info
