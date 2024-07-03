@@ -1,11 +1,11 @@
 import {
   animate,
   animateChild,
-  group,
   query,
   style,
   transition,
   trigger,
+  AnimationEvent,
 } from '@angular/animations';
 import {
   Component,
@@ -38,28 +38,24 @@ import { RouterLink } from '@angular/router';
           transform:
             'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
         }),
-        group([
-          query('@onHoverChild', animateChild()),
-          animate(
-            '150ms 450ms ease-in',
-            style({
-              transform:
-                'translateX(0px) translateY(1.4964px) scaleX(1) scaleY(1) translateZ(0px)',
-            }),
-          ),
-        ]),
+        query('@onHoverChild', animateChild()),
+        animate(
+          '100ms 75ms ease-in',
+          style({
+            transform:
+              'translateX(0px) translateY(1.4964px) scaleX(1) scaleY(1) translateZ(0px)',
+          }),
+        ),
       ]),
       transition(':leave', [
-        group([
-          query('@onHoverChild', animateChild()),
-          animate(
-            '250ms ease-in',
-            style({
-              transform:
-                'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
-            }),
-          ),
-        ]),
+        query('@onHoverChild', animateChild()),
+        animate(
+          '250ms ease-in',
+          style({
+            transform:
+              'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
+          }),
+        ),
       ]),
     ]),
     trigger('onHoverChild', [
@@ -67,7 +63,7 @@ import { RouterLink } from '@angular/router';
         style({
           opacity: 0,
         }),
-        animate('150ms 450ms ease-in', style({ opacity: 1 })),
+        animate('100ms 75ms ease-in', style({ opacity: 1 })),
       ]),
       transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
     ]),
@@ -77,6 +73,7 @@ export class CarouselComponent {
   swiper = viewChild<ElementRef>('swiper');
   showPreviewOnHover = false;
   hoveredVideoId = signal(0);
+  showPreviewVideoAfterAnimation = false;
   videos = toSignal(inject(VideoService).getAll());
   private videoService = inject(VideoService);
   // video = toSignal(inject(VideoService).getSingle(this.hoveredVideoId));
@@ -116,4 +113,11 @@ export class CarouselComponent {
   video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
     switchMap((id) => this.videoService.getSingle(id)),
   );
+
+  onAnimationEvent(event: AnimationEvent) {
+    if (event.phaseName === 'done') {
+      this.showPreviewVideoAfterAnimation =
+        !this.showPreviewVideoAfterAnimation;
+    }
+  }
 }

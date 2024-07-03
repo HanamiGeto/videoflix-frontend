@@ -23,10 +23,24 @@
           class="preview-modal-container"
           @onHover
           (mouseleave)="showPreviewOnHover = false"
+          (@onHover.start)="onAnimationEvent($event)"
+          (@onHover.done)="onAnimationEvent($event)"
         >
           <div class="preview-modal-content">
-            <img [src]="video.thumbnail_file | videoUrl" alt="" />
-            <div class="preview-video"></div>
+            @if (showPreviewVideoAfterAnimation) {
+              <video
+                class="preview-video"
+                [src]="video.video_file_resolutions._1080p | videoUrl"
+                autoplay
+                [muted]="'muted'"
+              ></video>
+            } @else {
+              <img
+                [src]="video.thumbnail_file | videoUrl"
+                alt=""
+                class="preview-thumbnail"
+              />
+            }
           </div>
           <div class="preview-modal-info-container" @onHoverChild>
             <div class="preview-modal-buttons-left-container">
