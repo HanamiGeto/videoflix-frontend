@@ -7,7 +7,7 @@
         @for (video of videos; track video.id) {
           <div
             class="swiper-slide card swiper-no-swiping"
-            (mouseover)="showPreviewOnHover = true"
+            (mouseover)="getVideoIdOnHover(video.id)"
           >
             <img [src]="video.thumbnail_file | videoUrl" alt="" />
           </div>
@@ -17,30 +17,32 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
     </div>
-    <!-- @if (showPreviewOnHover) {
-    <div
-      class="preview-modal-container"
-      @onHover
-      (mouseleave)="showPreviewOnHover = false"
-    >
-      <div class="preview-modal-content">
-        <div>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus,
-          ut.
+    @if (showPreviewOnHover) {
+      @if (video$ | async; as video) {
+        <div
+          class="preview-modal-container"
+          @onHover
+          (mouseleave)="showPreviewOnHover = false"
+        >
+          <div class="preview-modal-content">
+            <img [src]="video.thumbnail_file | videoUrl" alt="" />
+            <div class="preview-video"></div>
+          </div>
+          <div class="preview-modal-info-container" @onHoverChild>
+            <div class="preview-modal-buttons-left-container">
+              <a
+                class="preview-modal-buttons"
+                [routerLink]="['/watch', video.id]"
+              >
+                <img src="play-24.png" alt="Play Icon" />
+              </a>
+              <button class="preview-modal-buttons">List</button>
+              <button class="preview-modal-buttons">Like</button>
+            </div>
+            <button class="preview-modal-buttons">Info</button>
+          </div>
         </div>
-        <div class="preview-video"></div>
-      </div>
-      <div class="preview-modal-info-container" @onHoverChild>
-        <div class="preview-modal-buttons-left-container">
-          <button class="preview-modal-buttons">
-            <img src="play-24.png" alt="Play Button" />
-          </button>
-          <button class="preview-modal-buttons">List</button>
-          <button class="preview-modal-buttons">Like</button>
-        </div>
-        <button class="preview-modal-buttons">Info</button>
-      </div>
-    </div>
-  } -->
+      }
+    }
   </div>
 }

@@ -12,18 +12,23 @@ import {
   ElementRef,
   effect,
   inject,
+  signal,
   viewChild,
 } from '@angular/core';
 import Swiper from 'swiper/bundle';
 import { PreviewModalComponent } from '../preview-modal/preview-modal.component';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { VideoService } from '../shared/video.service';
 import { VideoUrlPipe } from '../shared/video-url.pipe';
+import { Observable, switchMap } from 'rxjs';
+import { Video } from '../shared/video';
+import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'vf-carousel',
   standalone: true,
-  imports: [PreviewModalComponent, VideoUrlPipe],
+  imports: [PreviewModalComponent, VideoUrlPipe, AsyncPipe, RouterLink],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [
@@ -71,7 +76,10 @@ import { VideoUrlPipe } from '../shared/video-url.pipe';
 export class CarouselComponent {
   swiper = viewChild<ElementRef>('swiper');
   showPreviewOnHover = false;
+  hoveredVideoId = signal(0);
   videos = toSignal(inject(VideoService).getAll());
+  private videoService = inject(VideoService);
+  // video = toSignal(inject(VideoService).getSingle(this.hoveredVideoId));
 
   constructor() {
     effect(() => {
@@ -87,7 +95,7 @@ export class CarouselComponent {
         slidesPerView: 6,
         slidesPerGroup: 6,
         loop: true,
-        spaceBetween: 5,
+        spaceBetween: 6,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
@@ -99,4 +107,13 @@ export class CarouselComponent {
       });
     }
   }
+
+  getVideoIdOnHover(videoId: number): void {
+    this.hoveredVideoId.set(videoId);
+    this.showPreviewOnHover = true;
+  }
+
+  video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
+    switchMap((id) => this.videoService.getSingle(id)),
+  );
 }
