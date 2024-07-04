@@ -6,8 +6,11 @@
       <div class="swiper-wrapper">
         @for (video of videos; track video.id) {
           <div
+            #video
             class="swiper-slide card swiper-no-swiping"
-            (mouseover)="getVideoIdOnHover(video.id)"
+            [id]="video.id"
+            (mouseover)="showPreviewModal(video.id)"
+            (mouseout)="clearTime()"
           >
             <img [src]="video.thumbnail_file | videoUrl" alt="" />
           </div>
@@ -17,12 +20,12 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div>
     </div>
-    @if (showPreviewOnHover) {
+    @if (showPreviewOnHover()) {
       @if (video$ | async; as video) {
         <div
           class="preview-modal-container"
           @onHover
-          (mouseleave)="showPreviewOnHover = false"
+          (mouseleave)="showPreviewOnHover.set(false)"
           (@onHover.start)="onAnimationEvent($event)"
           (@onHover.done)="onAnimationEvent($event)"
         >

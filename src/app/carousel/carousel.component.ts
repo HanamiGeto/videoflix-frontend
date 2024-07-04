@@ -14,6 +14,7 @@ import {
   inject,
   signal,
   viewChild,
+  viewChildren,
 } from '@angular/core';
 import Swiper from 'swiper/bundle';
 import { PreviewModalComponent } from '../preview-modal/preview-modal.component';
@@ -22,13 +23,19 @@ import { VideoService } from '../shared/video.service';
 import { VideoUrlPipe } from '../shared/video-url.pipe';
 import { Observable, switchMap } from 'rxjs';
 import { Video } from '../shared/video';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'vf-carousel',
   standalone: true,
-  imports: [PreviewModalComponent, VideoUrlPipe, AsyncPipe, RouterLink],
+  imports: [
+    PreviewModalComponent,
+    VideoUrlPipe,
+    AsyncPipe,
+    RouterLink,
+    NgStyle,
+  ],
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
   animations: [
@@ -40,7 +47,7 @@ import { RouterLink } from '@angular/router';
         }),
         query('@onHoverChild', animateChild()),
         animate(
-          '100ms 75ms ease-in',
+          '100ms ease-in',
           style({
             transform:
               'translateX(0px) translateY(1.4964px) scaleX(1) scaleY(1) translateZ(0px)',
@@ -50,7 +57,7 @@ import { RouterLink } from '@angular/router';
       transition(':leave', [
         query('@onHoverChild', animateChild()),
         animate(
-          '250ms ease-in',
+          '200ms ease-in',
           style({
             transform:
               'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
@@ -63,20 +70,26 @@ import { RouterLink } from '@angular/router';
         style({
           opacity: 0,
         }),
-        animate('100ms 75ms ease-in', style({ opacity: 1 })),
+        animate('100ms ease-in', style({ opacity: 1 })),
       ]),
       transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
     ]),
   ],
 })
 export class CarouselComponent {
-  swiper = viewChild<ElementRef>('swiper');
-  showPreviewOnHover = false;
+  private readonly swiper = viewChild<ElementRef>('swiper');
+  private readonly videoCards = viewChildren<ElementRef>('video');
+  private debounceTimeout?: ReturnType<typeof setTimeout>;
+  showPreviewOnHover = signal<boolean>(false);
   hoveredVideoId = signal(0);
   showPreviewVideoAfterAnimation = false;
+  xPositionOfHoveredVideo = 0;
   videos = toSignal(inject(VideoService).getAll());
-  private videoService = inject(VideoService);
-  // video = toSignal(inject(VideoService).getSingle(this.hoveredVideoId));
+  private readonly videoService = inject(VideoService);
+
+  video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
+    switchMap((id) => this.videoService.getSingle(id)),
+  );
 
   constructor() {
     effect(() => {
@@ -105,16 +118,33 @@ export class CarouselComponent {
     }
   }
 
-  getVideoIdOnHover(videoId: number): void {
-    this.hoveredVideoId.set(videoId);
-    this.showPreviewOnHover = true;
+  showPreviewModal(videoId: number): void {
+    this.debounceTimeout = setTimeout(() => {
+      this.hoveredVideoId.set(videoId);
+      this.getPositionOfHoveredVideo(videoId);
+      this.showPreviewOnHover.set(true);
+    }, 500);
   }
 
-  video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
-    switchMap((id) => this.videoService.getSingle(id)),
-  );
+  clearTime() {
+    clearTimeout(this.debounceTimeout);
+  }
 
-  onAnimationEvent(event: AnimationEvent) {
+  getPositionOfHoveredVideo(videoId: number): void {
+    const hoveredVideo = this.videoCards().find(
+      (video) => video.nativeElement.id === videoId.toString(),
+    );
+    if (hoveredVideo) {
+      console.log(this.videoCards().length);
+      console.log(hoveredVideo.nativeElement.ariaLabel.slice(0, 1));
+      console.log(hoveredVideo.nativeElement.ariaLabel.slice(0, 1));
+      const boundingRect = hoveredVideo.nativeElement.getBoundingClientRect();
+      console.log(boundingRect);
+      this.xPositionOfHoveredVideo = boundingRect.x;
+    }
+  }
+
+  onAnimationEvent(event: AnimationEvent): void {
     if (event.phaseName === 'done') {
       this.showPreviewVideoAfterAnimation =
         !this.showPreviewVideoAfterAnimation;
