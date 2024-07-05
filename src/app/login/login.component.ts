@@ -36,7 +36,7 @@ export class LoginComponent {
     const formValue = this.form.getRawValue();
     if (this.form.valid) {
       this.authService.login(formValue).subscribe(() => {
-        if (this.authService.isLoggedIn()) {
+        if (this.authService.isAuthenticated()) {
           this.router.navigate(['/browse']);
         }
       });

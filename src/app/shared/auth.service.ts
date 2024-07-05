@@ -10,7 +10,7 @@ interface User extends Tokens {
 }
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs';
 
@@ -20,6 +20,7 @@ import { tap } from 'rxjs';
 export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
+  readonly isAuthenticated = signal(false);
 
   signup(userData: { username: string; email: string; password: string }) {
     return this.http.post(`${this.apiUrl}accounts/signup/`, userData);
@@ -28,8 +29,9 @@ export class AuthService {
   login(userData: { email: string; password: string }) {
     return this.http.post<User>(`${this.apiUrl}accounts/login/`, userData).pipe(
       tap((result) => {
-        localStorage.setItem('access_token', JSON.stringify(result.access));
-        localStorage.setItem('refresh_token', JSON.stringify(result.refresh));
+        localStorage.setItem('access_token', result.access);
+        localStorage.setItem('refresh_token', result.refresh);
+        this.isAuthenticated.set(true);
       }),
     );
   }
@@ -50,9 +52,6 @@ export class AuthService {
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-  }
-
-  isLoggedIn() {
-    return localStorage.getItem('access_token') !== null;
+    this.isAuthenticated.set(false);
   }
 }
