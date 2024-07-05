@@ -44,3 +44,17 @@ export const previewModalAnimation = [
     transition(':leave', [animate('200ms ease-in', style({ opacity: 0 }))]),
   ]),
 ];
+
+export const routeTransition = [
+  trigger('routeTransition', [
+    transition('* => *', [
+      query(':enter', [style({ opacity: 0, scale: 1 })], { optional: true }),
+      query(':leave', [animate('750ms'), style({ opacity: 0, scale: 1.1 })], {
+        optional: true,
+      }),
+      query(':leave', [animate('1ms'), style({ opacity: 1, scale: 1 })], {
+        optional: true,
+      }),
+    ]),
+  ]),
+];

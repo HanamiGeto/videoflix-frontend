@@ -18,6 +18,7 @@ export const routes: Routes = [
     path: 'watch/:id',
     component: WatchComponent,
     canActivate: [authGuard],
+    data: { animation: 'routeTransition' },
   },
   { path: 'data-protection', component: DataprotectionComponent },
   { path: 'imprint', component: ImprintComponent },
