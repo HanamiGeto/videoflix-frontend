@@ -12,7 +12,7 @@
             (mouseover)="showPreviewModal(video.id)"
             (mouseout)="clearTime()"
           >
-            <img [src]="video.thumbnail_file | videoUrl" alt="" />
+            <img [src]="video.thumbnail_file" alt="" />
           </div>
         }
       </div>
@@ -34,13 +34,13 @@
             @if (showPreviewVideoAfterAnimation) {
               <video
                 class="preview-video"
-                [src]="video.video_file_resolutions._1080p | videoUrl"
+                [src]="video.video_file_resolutions._1080p"
                 autoplay
                 [muted]="'muted'"
               ></video>
             } @else {
               <img
-                [src]="video.thumbnail_file | videoUrl"
+                [src]="video.thumbnail_file"
                 alt=""
                 class="preview-thumbnail"
               />

@@ -1,6 +1,3 @@
 @if (video$ | async; as video) {
-  <video
-    [src]="video.video_file_resolutions._1080p | videoUrl"
-    controls
-  ></video>
+  <video [src]="video.video_file_resolutions._1080p" controls></video>
 }

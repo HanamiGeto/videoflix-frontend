@@ -1,7 +1,7 @@
 @if (video$ | async; as video) {
   <video
     class="show-video-and-thumbnail"
-    [src]="video.video_file_resolutions._1080p | videoUrl"
+    [src]="video.video_file_resolutions._1080p"
     autoplay
     [muted]="'muted'"
   ></video>
