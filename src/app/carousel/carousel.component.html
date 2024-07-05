@@ -28,6 +28,7 @@
           (mouseleave)="showPreviewOnHover.set(false)"
           (@onHover.start)="onAnimationEvent($event)"
           (@onHover.done)="onAnimationEvent($event)"
+          [ngStyle]="{ left: xPositionOfHoveredVideo + 'px' }"
         >
           <div class="preview-modal-content">
             @if (showPreviewVideoAfterAnimation) {
