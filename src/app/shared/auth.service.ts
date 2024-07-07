@@ -1,26 +1,17 @@
-interface Tokens {
-  access: string;
-  refresh: string;
-}
-
-interface User extends Tokens {
-  id: number;
-  username: string;
-  email: string;
-}
-
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs';
-
+import { Tokens, User } from './model';
+import { TokenService } from './token.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
-  readonly isAuthenticated = signal(false);
+  private tokenService = inject(TokenService);
+  // readonly isAuthenticated = signal(true);
 
   signup(userData: { username: string; email: string; password: string }) {
     return this.http.post(`${this.apiUrl}accounts/signup/`, userData);
@@ -28,30 +19,31 @@ export class AuthService {
 
   login(userData: { email: string; password: string }) {
     return this.http.post<User>(`${this.apiUrl}accounts/login/`, userData).pipe(
-      tap((result) => {
-        localStorage.setItem('access_token', result.access);
-        localStorage.setItem('refresh_token', result.refresh);
-        this.isAuthenticated.set(true);
+      tap((token) => {
+        this.tokenService.setTokens(token);
+        // this.isAuthenticated.set(true);
       }),
     );
   }
 
   refreshToken() {
-    const refreshToken = localStorage.getItem('refresh_token');
     return this.http
       .post<Tokens>(`${this.apiUrl}accounts/token/refresh/`, {
-        refresh: refreshToken,
+        refresh: this.tokenService.getRefreshToken(),
       })
       .pipe(
-        tap((result) => {
-          localStorage.setItem('access_token', result.access);
+        tap((token) => {
+          this.tokenService.setAccessToken(token.access);
         }),
       );
   }
 
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    this.isAuthenticated.set(false);
+    this.tokenService.clearTokens();
+    // this.isAuthenticated.set(false);
+  }
+
+  isLoggedIn() {
+    return this.tokenService.getAccessToken() !== null;
   }
 }
