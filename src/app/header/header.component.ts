@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { Router, RouterLink } from '@angular/router';
 
@@ -12,6 +12,12 @@ import { Router, RouterLink } from '@angular/router';
 export class HeaderComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  isScrolled = false;
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll() {
+    this.isScrolled = scrollY >= 57;
+  }
 
   logout() {
     this.authService.logout();
