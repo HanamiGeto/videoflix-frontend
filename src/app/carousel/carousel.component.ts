@@ -41,8 +41,14 @@ export class CarouselComponent {
   hoveredVideoId = signal(0);
   showPreviewVideoAfterAnimation = false;
   xPositionOfHoveredVideo = 0;
+  currentStylesContainer: Record<string, string> = {};
+  currentStylesContent: Record<string, string> = {};
   videos = toSignal(inject(VideoService).getAll());
   private readonly videoService = inject(VideoService);
+  startXOffset = 0;
+  startYOffset = 0;
+  startScaleX = 0;
+  startScaleY = 0;
 
   video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
     switchMap((id) => this.videoService.getSingle(id)),
@@ -75,10 +81,10 @@ export class CarouselComponent {
     }
   }
 
-  showPreviewModal(videoId: number): void {
+  showPreviewModal(videoId: number, index: number): void {
     this.debounceTimeout = setTimeout(() => {
       this.hoveredVideoId.set(videoId);
-      this.getPositionOfHoveredVideo(videoId);
+      this.getPositionOfHoveredVideo(videoId, index);
       this.showPreviewOnHover.set(true);
     }, 500);
   }
@@ -87,18 +93,67 @@ export class CarouselComponent {
     clearTimeout(this.debounceTimeout);
   }
 
-  getPositionOfHoveredVideo(videoId: number): void {
+  getPositionOfHoveredVideo(videoId: number, index: number): void {
     const hoveredVideo = this.videoCards().find(
       (video) => video.nativeElement.id === videoId.toString(),
     );
     if (hoveredVideo) {
-      console.log(this.videoCards().length);
-      console.log(hoveredVideo.nativeElement.ariaLabel.slice(0, 1));
-      console.log(hoveredVideo.nativeElement.ariaLabel.slice(0, 1));
       const boundingRect = hoveredVideo.nativeElement.getBoundingClientRect();
-      console.log(boundingRect);
-      this.xPositionOfHoveredVideo = boundingRect.x;
+      this.setAnimationParams(index, boundingRect);
+      this.setCurrentStylesContent(boundingRect.height);
     }
+  }
+
+  setCurrentStylesContainer(cardWidth: number, cardX: number) {
+    this.currentStylesContainer = {
+      width: `${cardWidth * 1.5}px`,
+      left: `${cardX}px`,
+    };
+  }
+
+  setCurrentStylesContent(cardHeight: number) {
+    this.currentStylesContent = {
+      height: `${cardHeight * 1.5}px`,
+    };
+  }
+
+  setAnimationParams(index: number, card: DOMRect): void {
+    const relativeIndex = index % 6;
+    const modalWidth = card.width * 1.5;
+    const modalContentHeight = card.height * 1.5;
+    const scaleX = card.width / modalWidth;
+    const scaleY = card.height / modalContentHeight;
+    const offsetX = (card.width - modalWidth) / 2;
+    const offsetY = (card.height * (1 - scaleY)) / 2;
+
+    switch (relativeIndex) {
+      case 0:
+        // Ganz linke Karte
+        this.startXOffset = offsetX;
+        this.startYOffset = offsetY;
+        this.setCurrentStylesContainer(card.width, card.x);
+        break;
+      case 5:
+        // Ganz rechte Karte
+        this.startXOffset = -offsetX;
+        this.startYOffset = offsetY;
+        this.setCurrentStylesContainer(
+          card.width,
+          card.x - (modalWidth - card.width),
+        );
+        break;
+      default:
+        // Karten dazwischen
+        this.startXOffset = 0;
+        this.startYOffset = offsetY;
+        this.setCurrentStylesContainer(
+          card.width,
+          card.x - (modalWidth - card.width) / 2,
+        );
+        break;
+    }
+    this.startScaleX = scaleX;
+    this.startScaleY = scaleY;
   }
 
   onAnimationEvent(event: AnimationEvent): void {

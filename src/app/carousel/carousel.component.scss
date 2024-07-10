@@ -19,15 +19,18 @@
 }
 
 .card {
+  // width on fullscreen = 300px
+  // height on fullscreen = 170px
   display: flex;
   background-color: black;
-  height: 150px;
-  width: 300px;
+  // height: 150px;
+  // width: 300px;
   border-radius: 5px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   border: 1px green solid;
+  box-sizing: border-box;
 
   img {
     height: 100%;
@@ -41,28 +44,18 @@
   position: absolute;
   top: -40px;
   left: 40px;
-  width: 420px;
-  // height: 400px;
-  // display: none; /* Standardmäßig ausgeblendet */
-  // justify-content: center;
-  // align-items: center;
   border-radius: 5px;
   // background: rgba(0, 0, 0, 0.8); /* Dunkler Hintergrund */
   // background: rgba(256, 160, 120, 0.5);
   border: 2px solid yellow;
+  box-sizing: border-box;
   z-index: 9;
   overflow: hidden;
-  transform-origin: 50% 50% 0px;
   cursor: pointer;
 }
 
 .preview-modal-content {
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
   position: relative;
-  height: 240px;
   width: 100%;
   background-color: black;
 }

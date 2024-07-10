@@ -4,12 +4,12 @@
   <div class="swiper-container">
     <div #swiper class="swiper">
       <div class="swiper-wrapper">
-        @for (video of videos; track video.id) {
+        @for (video of videos; track video.id; let i = $index) {
           <div
             #video
             class="swiper-slide card swiper-no-swiping"
             [id]="video.id"
-            (mouseover)="showPreviewModal(video.id)"
+            (mouseover)="showPreviewModal(video.id, i)"
             (mouseout)="clearTime()"
           >
             <img [src]="video.thumbnail_file" alt="" />
@@ -24,13 +24,21 @@
       @if (video$ | async; as video) {
         <div
           class="preview-modal-container"
-          @onHover
+          [@onHover]="{
+            value: '',
+            params: {
+              translateXValue: startXOffset,
+              translateYValue: startYOffset,
+              scaleXValue: startScaleX,
+              scaleYValue: startScaleY
+            }
+          }"
           (mouseleave)="showPreviewOnHover.set(false)"
           (@onHover.start)="onAnimationEvent($event)"
           (@onHover.done)="onAnimationEvent($event)"
-          [ngStyle]="{ left: xPositionOfHoveredVideo + 'px' }"
+          [ngStyle]="currentStylesContainer"
         >
-          <div class="preview-modal-content">
+          <div class="preview-modal-content" [ngStyle]="currentStylesContent">
             @if (showPreviewVideoAfterAnimation) {
               <video
                 class="preview-video"

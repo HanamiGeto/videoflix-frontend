@@ -12,24 +12,24 @@ export const previewModalAnimation = [
     transition(':enter', [
       style({
         transform:
-          'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
+          'translateX({{translateXValue}}px) translateY({{translateYValue}}px) scaleX({{scaleXValue}}) scaleY({{scaleYValue}})',
       }),
       query('@onHoverChild', animateChild()),
       animate(
         '100ms ease-in',
         style({
-          transform:
-            'translateX(0px) translateY(1.4964px) scaleX(1) scaleY(1) translateZ(0px)',
+          transform: 'translateX(0px) translateY(0px) scaleX(1) scaleY(1)',
         }),
       ),
     ]),
+
     transition(':leave', [
       query('@onHoverChild', animateChild()),
       animate(
         '200ms ease-in',
         style({
           transform:
-            'translateX(-61px) translateY(21px) scaleX(0.715) scaleY(0.63) translateZ(0px)',
+            'translateX({{translateXValue}}px) translateY({{translateYValue}}px) scaleX({{scaleXValue}}) scaleY({{scaleYValue}})',
         }),
       ),
     ]),
