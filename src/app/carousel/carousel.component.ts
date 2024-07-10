@@ -39,8 +39,7 @@ export class CarouselComponent {
   private debounceTimeout?: ReturnType<typeof setTimeout>;
   showPreviewOnHover = signal<boolean>(false);
   hoveredVideoId = signal(0);
-  showPreviewVideoAfterAnimation = false;
-  xPositionOfHoveredVideo = 0;
+  isPreviewVisible = false;
   currentStylesContainer: Record<string, string> = {};
   currentStylesContent: Record<string, string> = {};
   videos = toSignal(inject(VideoService).getAll());
@@ -81,10 +80,10 @@ export class CarouselComponent {
     }
   }
 
-  showPreviewModal(videoId: number, index: number): void {
+  displayPreviewModal(videoId: number, index: number): void {
     this.debounceTimeout = setTimeout(() => {
       this.hoveredVideoId.set(videoId);
-      this.getPositionOfHoveredVideo(videoId, index);
+      this.fetchHoveredVideoRect(videoId, index);
       this.showPreviewOnHover.set(true);
     }, 500);
   }
@@ -93,31 +92,31 @@ export class CarouselComponent {
     clearTimeout(this.debounceTimeout);
   }
 
-  getPositionOfHoveredVideo(videoId: number, index: number): void {
+  fetchHoveredVideoRect(videoId: number, index: number): void {
     const hoveredVideo = this.videoCards().find(
       (video) => video.nativeElement.id === videoId.toString(),
     );
     if (hoveredVideo) {
       const boundingRect = hoveredVideo.nativeElement.getBoundingClientRect();
-      this.setAnimationParams(index, boundingRect);
-      this.setCurrentStylesContent(boundingRect.height);
+      this.configureAnimationParams(index, boundingRect);
+      this.updateContentStyles(boundingRect.height);
     }
   }
 
-  setCurrentStylesContainer(cardWidth: number, cardX: number) {
+  updateContainerStyles(cardWidth: number, cardX: number) {
     this.currentStylesContainer = {
       width: `${cardWidth * 1.5}px`,
       left: `${cardX}px`,
     };
   }
 
-  setCurrentStylesContent(cardHeight: number) {
+  updateContentStyles(cardHeight: number) {
     this.currentStylesContent = {
       height: `${cardHeight * 1.5}px`,
     };
   }
 
-  setAnimationParams(index: number, card: DOMRect): void {
+  configureAnimationParams(index: number, card: DOMRect): void {
     const relativeIndex = index % 6;
     const modalWidth = card.width * 1.5;
     const modalContentHeight = card.height * 1.5;
@@ -131,13 +130,13 @@ export class CarouselComponent {
         // Ganz linke Karte
         this.startXOffset = offsetX;
         this.startYOffset = offsetY;
-        this.setCurrentStylesContainer(card.width, card.x);
+        this.updateContainerStyles(card.width, card.x);
         break;
       case 5:
         // Ganz rechte Karte
         this.startXOffset = -offsetX;
         this.startYOffset = offsetY;
-        this.setCurrentStylesContainer(
+        this.updateContainerStyles(
           card.width,
           card.x - (modalWidth - card.width),
         );
@@ -146,7 +145,7 @@ export class CarouselComponent {
         // Karten dazwischen
         this.startXOffset = 0;
         this.startYOffset = offsetY;
-        this.setCurrentStylesContainer(
+        this.updateContainerStyles(
           card.width,
           card.x - (modalWidth - card.width) / 2,
         );
@@ -158,8 +157,7 @@ export class CarouselComponent {
 
   onAnimationEvent(event: AnimationEvent): void {
     if (event.phaseName === 'done') {
-      this.showPreviewVideoAfterAnimation =
-        !this.showPreviewVideoAfterAnimation;
+      this.isPreviewVisible = !this.isPreviewVisible;
     }
   }
 }
