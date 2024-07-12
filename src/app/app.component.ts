@@ -18,7 +18,7 @@ export class AppComponent {
 
   shouldDisplayFooter(): boolean {
     const url = this.router.url;
-    return !(url === '/browse' || '/watch/:id');
+    return !(url === '/browse' || url === '/watch/:id');
   }
 
   getRouteAnimationData() {
