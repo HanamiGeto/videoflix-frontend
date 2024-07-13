@@ -40,3 +40,8 @@ nav {
   background: black;
   transition: all 300ms ease-out;
 }
+
+.active {
+  color: white !important;
+  font-weight: 500;
+}

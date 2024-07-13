@@ -1,8 +1,20 @@
 <nav [class.scrolled-nav]="isScrolled">
   <div>
-    <img src="logo.svg" alt="Videoflix Logo" />
-    <a routerLink="/browse">Home</a>
-    <a routerLink="/upload">Upload</a>
+    <a routerLink="/browse">
+      <img src="logo.svg" alt="Videoflix Logo" />
+    </a>
+    <a
+      routerLink="/browse"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >Home</a
+    >
+    <a
+      routerLink="/upload"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+      >Upload</a
+    >
     <a>My List</a>
   </div>
   <div>
