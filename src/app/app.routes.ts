@@ -7,11 +7,13 @@ import { ImprintComponent } from './imprint/imprint.component';
 import { authGuard } from './shared/auth.guard';
 import { VideoUploadComponent } from './video-upload/video-upload.component';
 import { WatchComponent } from './watch/watch.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'browse', component: BrowseComponent, canActivate: [authGuard] },
   { path: 'upload', component: VideoUploadComponent, canActivate: [authGuard] },
   {

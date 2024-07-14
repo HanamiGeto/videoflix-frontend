@@ -85,12 +85,26 @@ form {
 }
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   min-width: 80%;
   align-self: center;
-  padding: 24px
-}
+  padding: 24px;
 
-.logo {
-  height: 45px;
-  width: fit-content;
+  .logo {
+    height: 45px;
+    width: fit-content;
+  }
+
+  a {
+    color: #e50914;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }

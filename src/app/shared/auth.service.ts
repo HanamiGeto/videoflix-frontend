@@ -26,6 +26,10 @@ export class AuthService {
     );
   }
 
+  requestPasswordReset(userEmail: { email: string }) {
+    return this.http.post(`${this.apiUrl}accounts/password_reset/`, userEmail);
+  }
+
   refreshToken() {
     return this.http
       .post<Tokens>(`${this.apiUrl}accounts/token/refresh/`, {
