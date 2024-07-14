@@ -1,4 +1,4 @@
-import { ValidatorFn } from '@angular/forms';
+import { FormGroup, ValidatorFn } from '@angular/forms';
 
 export const customEmailValidator: ValidatorFn = function (control) {
   if (!control.value) {
@@ -10,4 +10,12 @@ export const customEmailValidator: ValidatorFn = function (control) {
     return { invalidemail: true };
   }
   return null;
+};
+
+export const matchPasswordValidator: ValidatorFn = function (control) {
+  const formGroup = control.parent as FormGroup;
+  if (!control.value) {
+    return null;
+  }
+  return formGroup.value.password === control.value ? null : { mismatch: true };
 };

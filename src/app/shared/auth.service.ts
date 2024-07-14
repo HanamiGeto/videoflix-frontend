@@ -30,6 +30,17 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}accounts/password_reset/`, userEmail);
   }
 
+  passwordReset(data: {
+    password: string;
+    password_confirm: string;
+    token: string;
+  }) {
+    return this.http.post(
+      `${this.apiUrl}accounts/password_reset/confirm/?token=${data.token}`,
+      data,
+    );
+  }
+
   refreshToken() {
     return this.http
       .post<Tokens>(`${this.apiUrl}accounts/token/refresh/`, {
