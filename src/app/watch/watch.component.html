@@ -1,3 +1,13 @@
 @if (video$ | async; as video) {
-  <video [src]="video.video_file_resolutions._1080p" controls></video>
+  <!-- <video [src]="video.video_file_resolutions._1080p" controls></video> -->
+  <vf-vjs-player
+    [options]="{
+      autoplay: true,
+      sources: [
+        { src: video.video_file_resolutions._1080p, type: 'video/mp4' }
+      ],
+      fill: true,
+      controls: true
+    }"
+  ></vf-vjs-player>
 }

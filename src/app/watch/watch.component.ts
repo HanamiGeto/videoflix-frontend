@@ -4,12 +4,12 @@ import { Observable, switchMap } from 'rxjs';
 import { Video } from '../shared/video';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
-import { VideoUrlPipe } from '../shared/video-url.pipe';
+import { VjsPlayerComponent } from '../vjs-player/vjs-player.component';
 
 @Component({
   selector: 'vf-watch',
   standalone: true,
-  imports: [AsyncPipe, VideoUrlPipe],
+  imports: [AsyncPipe, VjsPlayerComponent],
   templateUrl: './watch.component.html',
   styleUrl: './watch.component.scss',
 })
