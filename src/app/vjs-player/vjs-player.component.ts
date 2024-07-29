@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import videojs, { VideoJsPlayer } from 'video.js';
 import '../shared/videojs-resolution-switcher';
-import '../shared/videojs-custom-wraper';
+import '../shared/videojs-custom-control-bar';
 
 @Component({
   selector: 'vf-vjs-player',
@@ -35,14 +35,24 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
       type: string;
     }[];
     fill?: boolean;
-    controls?: boolean;
+    customControls?: boolean;
   }>();
   player!: VideoJsPlayer;
 
   ngOnInit(): void {
-    this.player = videojs(this.videoPlayer()?.nativeElement, {
-      ...this.options(),
-    });
+    this.player = videojs(
+      this.videoPlayer()?.nativeElement,
+      {
+        ...this.options(),
+      },
+      () => {
+        if (this.options().customControls) {
+          this.player.addChild('CustomControlBar');
+          this.player.removeClass('vjs-controls-disabled');
+          this.player.removeChild(this.player.controlBar);
+        }
+      },
+    );
   }
 
   ngOnDestroy(): void {

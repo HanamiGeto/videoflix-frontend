@@ -109,3 +109,64 @@ form {
     }
   }
 }
+
+.video-js {
+  font-size: 16px;
+}
+
+.video-js .vjs-custom-control-bar {
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6em;
+}
+
+.vjs-has-started .vjs-custom-control-bar,
+.vjs-audio-only-mode .vjs-custom-control-bar {
+  display: flex;
+  flex-direction: column;
+  visibility: visible;
+  opacity: 1;
+  transition:
+    visibility 0.1s,
+    opacity 0.1s;
+}
+
+.vjs-has-started.vjs-user-inactive.vjs-playing .vjs-custom-control-bar {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    visibility 1s,
+    opacity 1s;
+}
+
+.vjs-top-controls,
+.vjs-bottom-controls {
+  display: flex;
+  height: 100%;
+}
+
+.video-js .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+}
+
+.vjs-custom-controls-disabled .vjs-big-play-button,
+.vjs-has-started .vjs-big-play-button,
+.vjs-using-native-controls .vjs-big-play-button,
+.vjs-error .vjs-big-play-button {
+  display: none;
+}
+
+.video-js .vjs-play-progress {
+  background-color: #e50914;
+}
+
+.video-js .vjs-play-progress:before {
+  color: #e50914;
+}
