@@ -189,6 +189,11 @@ form {
   }
 }
 
+.vjs-resolution-item-active {
+  background-color: rgba($color: white, $alpha: 0.9) !important;
+  color: black !important;
+}
+
 .vjs-resolution-panel {
   display: flex;
   flex-direction: column-reverse;

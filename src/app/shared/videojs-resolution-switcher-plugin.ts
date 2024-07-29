@@ -9,7 +9,7 @@ class VideoJsQualityComponent extends Button {
     src: '',
   };
 
-  private qualityOptions: QualityOptions;
+  qualityOptions: QualityOptions;
 
   constructor(
     player: VideoJsPlayer,
@@ -36,6 +36,14 @@ class VideoJsQualityComponent extends Button {
     const el = super.createEl(tag, props, attributes);
     return el;
   }
+
+  setActive(active: boolean) {
+    if (active) {
+      this.addClass('vjs-resolution-item-active');
+    } else {
+      this.removeClass('vjs-resolution-item-active');
+    }
+  }
 }
 
 videojs.registerComponent('QualityComponent', VideoJsQualityComponent);
@@ -47,6 +55,7 @@ export class VideoJsQualityButton extends Component {
   };
 
   private qualityComponentOptions: VideoJsQualityButtonOptions;
+  private currentQuality: string;
 
   constructor(
     player: VideoJsPlayer,
@@ -58,10 +67,13 @@ export class VideoJsQualityButton extends Component {
       ...VideoJsQualityButton.defaultButtonOptions,
       ...qualityComponentOptions,
     };
+
+    this.currentQuality = this.qualityComponentOptions.sources[2].label;
     this.addClass('vjs-control');
     this.addClass('vjs-resolution-panel');
     this.addClass('vjs-resolution-panel-vertical');
     this.createMenu();
+    this.updateActiveItems();
   }
 
   override createEl(tag = 'div', props = {}, attributes = {}) {
@@ -74,7 +86,7 @@ export class VideoJsQualityButton extends Component {
       className: 'res-label',
     });
 
-    resLabel.el().innerHTML = this.qualityComponentOptions.sources[2].label;
+    resLabel.el().innerHTML = this.currentQuality;
 
     const wrapper = this.addChild('Component', {
       className: 'vjs-resolution-control vjs-resolution-vertical',
@@ -83,7 +95,9 @@ export class VideoJsQualityButton extends Component {
     this.qualityComponentOptions.sources.forEach((source) => {
       wrapper.addChild('QualityComponent', source);
       wrapper.getChild('QualityComponent')?.on('click', () => {
-        resLabel.el().innerHTML = source.label;
+        this.currentQuality = source.label;
+        resLabel.el().innerHTML = this.currentQuality;
+        this.updateActiveItems();
       });
     });
 
@@ -98,6 +112,14 @@ export class VideoJsQualityButton extends Component {
     this.on('mouseleave', () => {
       this.removeClass('vjs-hover');
       topControls?.removeClass('hide-top-controls');
+    });
+  }
+
+  private updateActiveItems() {
+    const wrapper = this.getChild('Component');
+    const items = wrapper?.children() as VideoJsQualityComponent[];
+    items.forEach((item) => {
+      item.setActive(item.qualityOptions.label === this.currentQuality);
     });
   }
 }
