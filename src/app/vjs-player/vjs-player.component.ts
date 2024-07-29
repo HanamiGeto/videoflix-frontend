@@ -54,12 +54,26 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
         plugins: {
           qualityPlugin: { sources: this.resolutionSources()?.sources },
         },
+        userActions: {
+          hotkeys: {
+            muteKey(event) {
+              return event.which === 77;
+            },
+            fullscreenKey(event) {
+              return event.which === 70;
+            },
+            playPauseKey(event) {
+              return event.which === 32;
+            },
+          },
+        },
       },
       () => {
         if (this.options().customControls) {
           this.player.addChild('CustomControlBar');
           this.player.removeClass('vjs-controls-disabled');
           this.player.removeChild(this.player.controlBar);
+          this.addVideoEventHandlers();
         }
       },
     );
@@ -68,6 +82,28 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.player) {
       this.player.dispose();
+    }
+  }
+
+  private addVideoEventHandlers() {
+    const videoElement = this.videoPlayer()?.nativeElement;
+
+    if (videoElement) {
+      videoElement.addEventListener('click', () => {
+        if (this.player.paused()) {
+          this.player.play();
+        } else {
+          this.player.pause();
+        }
+      });
+
+      videoElement.addEventListener('dblclick', () => {
+        if (this.player.isFullscreen()) {
+          this.player.exitFullscreen();
+        } else {
+          this.player.requestFullscreen();
+        }
+      });
     }
   }
 }
