@@ -170,3 +170,163 @@ form {
 .video-js .vjs-play-progress:before {
   color: #e50914;
 }
+
+
+.vjs-top-controls {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    visibility 0.1s,
+    opacity 0.1s;
+}
+
+.vjs-resolution-item {
+  cursor: pointer;
+  transition: all 125ms ease-in-out;
+
+  &:hover {
+    background-color: rgba($color: white, $alpha: 0.2);
+    transition: all 125ms ease-in-out;
+  }
+}
+
+.vjs-resolution-panel {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.vjs-resolution-control {
+  height: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.video-js .vjs-resolution-panel.vjs-hover .vjs-resolution-control,
+.video-js .vjs-resolution-panel:active .vjs-resolution-control,
+.video-js .vjs-resolution-panel:focus .vjs-resolution-control,
+.video-js .vjs-resolution-panel .vjs-resolution-control:active,
+.video-js .vjs-resolution-panel.vjs-hover .res-label ~ .vjs-resolution-control,
+.video-js .vjs-resolution-panel .vjs-resolution-control.vjs-slider-active {
+  visibility: visible;
+  opacity: 1;
+  position: relative;
+  transition:
+    visibility 0.1s,
+    opacity 0.1s,
+    height 0.1s,
+    width 0.1s,
+    left 0s,
+    top 0s;
+}
+
+.video-js .vjs-resolution-panel .vjs-resolution-control {
+  visibility: visible;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin-top: -16px;
+}
+
+.video-js.vjs-no-flex .vjs-resolution-control.vjs-resolution-vertical,
+.video-js.vjs-no-flex
+  .vjs-resolution-panel
+  .vjs-resolution-control.vjs-resolution-vertical {
+  position: absolute;
+  bottom: 3em;
+  left: 0.5em;
+}
+
+.video-js
+  .vjs-resolution-panel
+  .vjs-resolution-control.vjs-resolution-vertical {
+  transition:
+    visibility 1s,
+    opacity 1s,
+    height 1s 1s,
+    width 1s,
+    left 1s 1s,
+    top 1s 1s;
+}
+
+.video-js
+  .vjs-resolution-panel.vjs-hover
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel:active
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel:focus
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel
+  .vjs-resolution-control:active.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel.vjs-hover
+  .res-label
+  ~ .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel
+  .vjs-resolution-control.vjs-slider-active.vjs-resolution-vertical {
+  top: -1em;
+  transition: top 0s;
+}
+
+.video-js .vjs-resolution-control.vjs-resolution-vertical {
+  width: 5em;
+}
+
+.video-js
+  .vjs-resolution-panel.vjs-hover
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel:active
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel:focus
+  .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel
+  .vjs-resolution-control:active.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel.vjs-hover
+  .res-label
+  ~ .vjs-resolution-control.vjs-resolution-vertical,
+.video-js
+  .vjs-resolution-panel
+  .vjs-resolution-control.vjs-slider-active.vjs-resolution-vertical {
+  width: 5em;
+  height: 3em;
+  margin-right: 0;
+  margin-bottom: -1em;
+}
+
+.video-js.vjs-no-flex
+  .vjs-resolution-panel
+  .vjs-resolution-control.vjs-resolution-vertical {
+  width: 5em;
+  height: 3em;
+  visibility: visible;
+  opacity: 1;
+  position: relative;
+  transition: none;
+}
+
+.video-js .vjs-resolution-vertical .vjs-menu {
+  top: -2em;
+}
+
+.video-js .res-label {
+  height: 100%;
+  align-content: center;
+  cursor: pointer;
+  flex: none;
+}
+
+.hide-top-controls {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    visibility 1s,
+    opacity 1s;
+}

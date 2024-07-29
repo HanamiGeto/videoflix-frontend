@@ -7,7 +7,7 @@ import {
   viewChild,
 } from '@angular/core';
 import videojs, { VideoJsPlayer } from 'video.js';
-import '../shared/videojs-resolution-switcher';
+import '../shared/videojs-resolution-switcher-plugin';
 import '../shared/videojs-custom-control-bar';
 
 @Component({
@@ -38,12 +38,22 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
     customControls?: boolean;
   }>();
   player!: VideoJsPlayer;
+  resolutionSources = input<{
+    sources?: {
+      src: string;
+      type: string;
+      label: string;
+    }[];
+  }>();
 
   ngOnInit(): void {
     this.player = videojs(
       this.videoPlayer()?.nativeElement,
       {
         ...this.options(),
+        plugins: {
+          qualityPlugin: { sources: this.resolutionSources()?.sources },
+        },
       },
       () => {
         if (this.options().customControls) {

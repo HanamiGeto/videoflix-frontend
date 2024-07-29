@@ -9,5 +9,24 @@
       fill: true,
       customControls: true
     }"
+    [resolutionSources]="{
+      sources: [
+        {
+          src: video.video_file_resolutions._360p,
+          type: 'video/mp4',
+          label: 'low'
+        },
+        {
+          src: video.video_file_resolutions._720p,
+          type: 'video/mp4',
+          label: 'mid'
+        },
+        {
+          src: video.video_file_resolutions._1080p,
+          type: 'video/mp4',
+          label: 'high'
+        }
+      ]
+    }"
   ></vf-vjs-player>
 }
