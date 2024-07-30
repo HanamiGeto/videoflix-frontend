@@ -67,6 +67,11 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
             },
           },
         },
+        controlBar: {
+          volumePanel: {
+            inline: false,
+          },
+        },
       },
       () => {
         if (this.options().customControls) {

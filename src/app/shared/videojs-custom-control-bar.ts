@@ -55,13 +55,51 @@ class CustomControlBar extends ControlBar {
     const topControls = this.addChild('TopControls');
     const bottomControls = this.addChild('BottomControls');
 
-    topControlsComponents.forEach((child) => {
-      topControls.addChild(child);
-    });
+    this.addControlsToContainer(topControlsComponents, topControls);
+    this.addControlsToContainer(
+      bottomControlsComponents,
+      bottomControls,
+      topControls,
+    );
+  }
 
-    bottomControlsComponents.forEach((child) => {
-      bottomControls.addChild(child);
+  private addControlsToContainer(
+    controls: videojs.Component[],
+    container: videojs.Component,
+    topControls?: videojs.Component,
+  ) {
+    controls.forEach((child) => {
+      if (child.name() === 'VolumePanel') {
+        this.addVolumePanelOptions(container, topControls);
+      } else {
+        container.addChild(child);
+      }
     });
+  }
+
+  private addVolumePanelOptions(
+    bottomControls: videojs.Component,
+    topControls?: videojs.Component,
+  ) {
+    const volumePanel = bottomControls.addChild('VolumePanel', {
+      inline: false,
+    });
+    this.addVolumePanelListeners(volumePanel, topControls);
+  }
+
+  private addVolumePanelListeners(
+    volumePanel: videojs.Component,
+    topControls?: videojs.Component,
+  ) {
+    if (volumePanel) {
+      volumePanel.on('mouseenter', () => {
+        topControls?.addClass('hide-top-controls');
+      });
+
+      volumePanel.on('mouseleave', () => {
+        topControls?.removeClass('hide-top-controls');
+      });
+    }
   }
 
   override createEl() {

@@ -115,7 +115,7 @@ form {
 }
 
 .video-js .vjs-custom-control-bar {
-  background: rgba(0, 0, 0, 0.5);
+  // background: rgba(0, 0, 0, 0.5);
   display: none;
   position: absolute;
   left: 0;
@@ -276,7 +276,7 @@ form {
 }
 
 .video-js .vjs-resolution-control.vjs-resolution-vertical {
-  width: 5em;
+  width: 4em;
 }
 
 .video-js
@@ -298,7 +298,7 @@ form {
 .video-js
   .vjs-resolution-panel
   .vjs-resolution-control.vjs-slider-active.vjs-resolution-vertical {
-  width: 5em;
+  width: 4em;
   height: 3em;
   margin-right: 0;
   margin-bottom: -1em;
@@ -307,7 +307,7 @@ form {
 .video-js.vjs-no-flex
   .vjs-resolution-panel
   .vjs-resolution-control.vjs-resolution-vertical {
-  width: 5em;
+  width: 4em;
   height: 3em;
   visibility: visible;
   opacity: 1;
@@ -333,4 +333,20 @@ form {
   transition:
     visibility 1s,
     opacity 1s;
+}
+
+.video-js .vjs-volume-panel.vjs-volume-panel-vertical {
+  height: 3em;
+}
+
+.video-js .vjs-volume-level {
+  background-color: #e50914;
+}
+
+.vjs-slider-vertical .vjs-volume-level:before {
+  color: #e50914;
+}
+
+.video-js .vjs-volume-vertical {
+  background-color: #141414;
 }
