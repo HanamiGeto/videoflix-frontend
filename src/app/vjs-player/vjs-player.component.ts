@@ -9,6 +9,7 @@ import {
 import videojs, { VideoJsPlayer } from 'video.js';
 import '../shared/videojs-resolution-switcher-plugin';
 import '../shared/videojs-custom-control-bar';
+import '../shared/videojs-titlebar-plugin';
 
 @Component({
   selector: 'vf-vjs-player',
@@ -45,6 +46,9 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
       label: string;
     }[];
   }>();
+  titleBar = input<{
+    title: string;
+  }>();
 
   ngOnInit(): void {
     this.player = videojs(
@@ -53,6 +57,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
         ...this.options(),
         plugins: {
           qualityPlugin: { sources: this.resolutionSources()?.sources },
+          titleBarPlugin: { title: this.titleBar()?.title },
         },
         userActions: {
           hotkeys: {
