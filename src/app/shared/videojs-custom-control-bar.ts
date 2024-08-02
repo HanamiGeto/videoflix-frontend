@@ -5,11 +5,11 @@ const Component = videojs.getComponent('Component');
 class TopControls extends Component {
   constructor(player: VideoJsPlayer) {
     super(player);
+    this.addClass('vjs-top-controls');
   }
-  override createEl() {
-    return videojs.dom.createEl('div', {
-      className: 'vjs-top-controls',
-    });
+  override createEl(tag = 'div', props = {}, attributes = {}) {
+    const el = super.createEl(tag, props, attributes);
+    return el;
   }
 }
 
@@ -18,11 +18,11 @@ videojs.registerComponent('TopControls', TopControls);
 class BottomControls extends Component {
   constructor(player: VideoJsPlayer) {
     super(player);
+    this.addClass('vjs-bottom-controls');
   }
-  override createEl() {
-    return videojs.dom.createEl('div', {
-      className: 'vjs-bottom-controls',
-    });
+  override createEl(tag = 'div', props = {}, attributes = {}) {
+    const el = super.createEl(tag, props, attributes);
+    return el;
   }
 }
 
