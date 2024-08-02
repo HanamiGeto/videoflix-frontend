@@ -1,15 +1,14 @@
 @if (video$ | async; as video) {
-  <video
+  <vf-vjs-player
     class="show-video-and-thumbnail"
-    [src]="video.video_file_resolutions._1080p"
-    autoplay
-    [muted]="'muted'"
-  ></video>
-  <!-- <img
-    class="show-video-and-thumbnail"
-    [src]="video.thumbnail_file | videoUrl"
-    alt=""
-  /> -->
+    [options]="{
+      autoplay: true,
+      sources: [
+        { src: video.video_file_resolutions._1080p, type: 'video/mp4' }
+      ],
+      fill: true
+    }"
+  ></vf-vjs-player>
   <div class="video-info-container">
     <h3>{{ video.title }}</h3>
     <p>
