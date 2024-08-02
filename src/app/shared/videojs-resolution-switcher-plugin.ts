@@ -27,7 +27,6 @@ class VideoJsQualityComponent extends Button {
       player.play();
       player.trigger('qualitychange', this.qualityOptions.label);
     });
-    this.controlText(this.qualityOptions.label);
     this.el().innerHTML = this.qualityOptions.label;
     this.addClass('vjs-resolution-item');
   }
