@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   input,
   OnDestroy,
   OnInit,
@@ -10,6 +11,8 @@ import videojs, { VideoJsPlayer } from 'video.js';
 import '../shared/videojs-resolution-switcher-plugin';
 import '../shared/videojs-custom-control-bar';
 import '../shared/videojs-titlebar-plugin';
+import '../shared/videojs-back-button-plugin';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'vf-vjs-player',
@@ -27,6 +30,7 @@ import '../shared/videojs-titlebar-plugin';
   styleUrl: './vjs-player.component.scss',
 })
 export class VjsPlayerComponent implements OnInit, OnDestroy {
+  private router = inject(Router);
   private readonly videoPlayer = viewChild<ElementRef>('videoPlayer');
   options = input.required<{
     fluid?: boolean;
@@ -58,6 +62,7 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
         plugins: {
           qualityPlugin: { sources: this.resolutionSources()?.sources },
           titleBarPlugin: { title: this.titleBar()?.title },
+          backButtonPlugin: { router: this.router },
         },
         userActions: {
           hotkeys: {
