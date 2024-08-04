@@ -3,20 +3,24 @@
   <h2>Video upload</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="input-container">
-      <label for="title"></label>
-      <input formControlName="title" id="title" placeholder="Title" />
+      <div class="input-field">
+        <input formControlName="title" id="title" placeholder="Title" />
+        <label for="title">Title</label>
+      </div>
       <vf-form-errors
         controlName="title"
         [messages]="{ required: 'Your title is required' }"
       ></vf-form-errors>
     </div>
     <div class="input-container">
-      <label for="description"></label>
-      <input
-        formControlName="description"
-        id="description"
-        placeholder="Description"
-      />
+      <div class="input-field">
+        <input
+          formControlName="description"
+          id="description"
+          placeholder="Description"
+        />
+        <label for="description">Description</label>
+      </div>
       <vf-form-errors
         controlName="description"
         [messages]="{

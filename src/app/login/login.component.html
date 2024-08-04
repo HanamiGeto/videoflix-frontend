@@ -5,8 +5,14 @@
   <h2>Sign in</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="input-container">
-      <label for="email"></label>
-      <input formControlName="email" id="email" placeholder="Email address" />
+      <div class="input-field">
+        <input
+          formControlName="email"
+          id="email"
+          placeholder="Enter your Email"
+        />
+        <label for="email">Email</label>
+      </div>
       <vf-form-errors
         controlName="email"
         [messages]="{
@@ -16,13 +22,15 @@
       ></vf-form-errors>
     </div>
     <div class="input-container">
-      <label for="password"></label>
-      <input
-        formControlName="password"
-        type="password"
-        id="password"
-        placeholder="Password"
-      />
+      <div class="input-field">
+        <input
+          formControlName="password"
+          type="password"
+          id="password"
+          placeholder="Password"
+        />
+        <label for="password">Password</label>
+      </div>
       <vf-form-errors
         controlName="password"
         [messages]="{ required: 'Your password is required' }"
