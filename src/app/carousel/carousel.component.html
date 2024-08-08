@@ -1,5 +1,5 @@
 <!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
-<h4>New on Videoflix</h4>
+<h4>{{ videoGenre() }}</h4>
 @if (videos(); as videos) {
   <div class="swiper-container">
     <div #swiper class="swiper">
@@ -9,7 +9,7 @@
             #video
             class="swiper-slide card swiper-no-swiping"
             [id]="video.id"
-            (mouseover)="showPreviewModal(video.id, i)"
+            (mouseover)="displayPreviewModal(video.id, i)"
             (mouseout)="clearTime()"
           >
             <img [src]="video.thumbnail_file" alt="" />
@@ -39,7 +39,7 @@
           [ngStyle]="currentStylesContainer"
         >
           <div class="preview-modal-content" [ngStyle]="currentStylesContent">
-            @if (showPreviewVideoAfterAnimation) {
+            @if (isPreviewVisible) {
               <video
                 class="preview-video"
                 [src]="video.video_file_resolutions._1080p"

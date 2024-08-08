@@ -4,6 +4,7 @@ import {
   ElementRef,
   effect,
   inject,
+  input,
   signal,
   viewChild,
   viewChildren,
@@ -13,7 +14,7 @@ import { PreviewModalComponent } from '../preview-modal/preview-modal.component'
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { VideoService } from '../shared/video.service';
 import { VideoUrlPipe } from '../shared/video-url.pipe';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { Video } from '../shared/video';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -42,8 +43,8 @@ export class CarouselComponent {
   isPreviewVisible = false;
   currentStylesContainer: Record<string, string> = {};
   currentStylesContent: Record<string, string> = {};
-  videos = toSignal(inject(VideoService).getAll());
   private readonly videoService = inject(VideoService);
+  videoGenre = input.required<string>();
   startXOffset = 0;
   startYOffset = 0;
   startScaleX = 0;
@@ -51,6 +52,18 @@ export class CarouselComponent {
 
   video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
     switchMap((id) => this.videoService.getSingle(id)),
+  );
+
+  videos = toSignal(
+    inject(VideoService)
+      .getAll()
+      .pipe(
+        switchMap((videos) =>
+          of(
+            videos.filter((video) => video.genre_display === this.videoGenre()),
+          ),
+        ),
+      ),
   );
 
   constructor() {

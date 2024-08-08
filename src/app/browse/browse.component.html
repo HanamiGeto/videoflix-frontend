@@ -1,4 +1,6 @@
 <vf-header></vf-header>
 <vf-banner></vf-banner>
-<vf-carousel></vf-carousel>
+@for (videoGenre of videoGenres(); track $index) {
+  <vf-carousel [videoGenre]="videoGenre"></vf-carousel>
+}
 <vf-footer></vf-footer>
