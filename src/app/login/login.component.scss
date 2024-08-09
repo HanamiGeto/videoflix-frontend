@@ -3,4 +3,7 @@
   flex-direction: column;
   background-color: gray;
   height: calc(100% - 100px);
+  background-image: url("../../../public/shared-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
