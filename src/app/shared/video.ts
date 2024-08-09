@@ -17,8 +17,3 @@ export interface VideoResolutions {
   _720p: string;
   _360p: string;
 }
-
-export type VideoUpload = Pick<Video, 'title' | 'description'> & {
-  genre: Genre | null;
-  video_file: File | null;
-};
