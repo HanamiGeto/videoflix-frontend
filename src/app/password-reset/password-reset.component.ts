@@ -9,11 +9,17 @@ import {
 } from '@angular/forms';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
 import { matchPasswordValidator } from '../validators';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'vf-password-reset',
   standalone: true,
-  imports: [FormErrorsComponent, ReactiveFormsModule, RouterLink],
+  imports: [
+    FormErrorsComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    FooterComponent,
+  ],
   templateUrl: './password-reset.component.html',
   styleUrl: './password-reset.component.scss',
 })

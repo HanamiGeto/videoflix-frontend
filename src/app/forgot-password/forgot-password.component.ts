@@ -9,11 +9,17 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { customEmailValidator } from '../validators';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'vf-forgot-password',
   standalone: true,
-  imports: [FormErrorsComponent, ReactiveFormsModule, RouterLink],
+  imports: [
+    FormErrorsComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    FooterComponent,
+  ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
 })

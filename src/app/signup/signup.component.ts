@@ -9,11 +9,17 @@ import { FormErrorsComponent } from '../form-errors/form-errors.component';
 import { customEmailValidator } from '../validators';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'vf-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, FormErrorsComponent, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    FormErrorsComponent,
+    RouterLink,
+    FooterComponent,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })

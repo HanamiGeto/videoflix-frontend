@@ -9,11 +9,17 @@ import {
 import { customEmailValidator } from '../validators';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'vf-login',
   standalone: true,
-  imports: [FormErrorsComponent, ReactiveFormsModule, RouterLink],
+  imports: [
+    FormErrorsComponent,
+    ReactiveFormsModule,
+    RouterLink,
+    FooterComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -36,7 +42,7 @@ export class LoginComponent {
     const formValue = this.form.getRawValue();
     if (this.form.valid) {
       this.authService.login(formValue).subscribe(() => {
-        if (this.authService.isAuthenticated()) {
+        if (this.authService.isLoggedIn()) {
           this.router.navigate(['/browse']);
         }
       });
