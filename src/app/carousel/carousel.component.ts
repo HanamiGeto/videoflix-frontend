@@ -60,7 +60,9 @@ export class CarouselComponent {
       .pipe(
         switchMap((videos) =>
           of(
-            videos.filter((video) => video.genre_display === this.videoGenre()),
+            videos
+              .filter((video) => video.genre_display === this.videoGenre())
+              .sort((a, b) => a.id - b.id),
           ),
         ),
       ),
