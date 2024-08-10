@@ -1,10 +1,12 @@
 @if (video$ | async; as video) {
-  <!-- <video [src]="video.video_file_resolutions._1080p" controls></video> -->
   <vf-vjs-player
     [options]="{
       autoplay: true,
       sources: [
-        { src: video.video_file_resolutions._1080p, type: 'video/mp4' }
+        {
+          src: video.video_file_resolutions._1080p,
+          type: 'application/x-mpegURL'
+        }
       ],
       fill: true,
       customControls: true
@@ -13,17 +15,17 @@
       sources: [
         {
           src: video.video_file_resolutions._360p,
-          type: 'video/mp4',
+          type: 'application/x-mpegURL',
           label: '360p'
         },
         {
           src: video.video_file_resolutions._720p,
-          type: 'video/mp4',
+          type: 'application/x-mpegURL',
           label: '720p'
         },
         {
           src: video.video_file_resolutions._1080p,
-          type: 'video/mp4',
+          type: 'application/x-mpegURL',
           label: '1080p'
         }
       ]

@@ -4,7 +4,10 @@
     [options]="{
       autoplay: true,
       sources: [
-        { src: video.video_file_resolutions._1080p, type: 'video/mp4' }
+        {
+          src: video.video_file_resolutions._1080p,
+          type: 'application/x-mpegURL'
+        }
       ],
       fill: true
     }"

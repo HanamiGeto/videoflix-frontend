@@ -23,7 +23,10 @@ class VideoJsQualityComponent extends Button {
     };
 
     this.on('click', () => {
-      player.src({ src: this.qualityOptions.src, type: 'video/mp4' });
+      player.src({
+        src: this.qualityOptions.src,
+        type: 'application/x-mpegURL',
+      });
       player.play();
       player.trigger('qualitychange', this.qualityOptions.label);
     });
