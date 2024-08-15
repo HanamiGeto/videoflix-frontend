@@ -1,0 +1,23 @@
+<!-- eslint-disable @angular-eslint/template/no-autofocus -->
+@if (openSearch()) {
+  <div class="search-field" #searchField @searchFieldTransition>
+    <img src="search-13-24.png" alt="" />
+    <label for="search"></label>
+    <input
+      type="search"
+      id="search"
+      autocomplete="off"
+      aria-label="Search"
+      autofocus
+      #searchInput
+      placeholder="Title, Genres"
+    />
+    <div class="remove-search-container">
+      <img src="x-mark-16.png" alt="" />
+    </div>
+  </div>
+} @else {
+  <button (click)="openSearch.set(true)">
+    <img src="search-13-24.png" alt="" />
+  </button>
+}

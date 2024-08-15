@@ -1,0 +1,76 @@
+:host {
+  display: flex;
+  align-items: center;
+}
+
+button {
+  display: flex;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  img {
+    height: 21px;
+    width: 21px;
+  }
+}
+
+.search-field {
+  display: flex;
+  align-items: center;
+  border: 1px solid white;
+  background-color: #141414;
+  padding: 5px;
+  gap: 5px;
+  overflow: hidden;
+
+  img {
+    height: 21px;
+    width: 21px;
+  }
+
+  .remove-search-container {
+    height: 14px;
+    width: 14px;
+
+    img {
+      height: 14px;
+      width: 14px;
+      cursor: pointer;
+    }
+  }
+
+  input {
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    width: 212px;
+
+    &::placeholder {
+      color: rgba($color: #ffffff, $alpha: 0.8);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+  /* clears the ‘X’ from Internet Explorer */
+  input[type="search"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  input[type="search"]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  } /* clears the ‘X’ from Chrome */
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+  }
+}
