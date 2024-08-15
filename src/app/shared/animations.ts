@@ -58,3 +58,12 @@ export const routeTransition = [
     ]),
   ]),
 ];
+
+export const searchFieldTransition = [
+  trigger('searchFieldTransition', [
+    transition(':enter', [
+      style({ width: 0 + 'px' }),
+      animate('350ms ease-out'),
+    ]),
+  ]),
+];
