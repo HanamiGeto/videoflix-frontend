@@ -43,4 +43,8 @@ export class SearchComponent {
       }
     });
   }
+
+  clearSearch() {
+    this.searchInput()!.nativeElement.value = '';
+  }
 }
