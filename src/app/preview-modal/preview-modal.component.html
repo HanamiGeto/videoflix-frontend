@@ -1,0 +1,38 @@
+<div
+  class="preview-modal-container"
+  [@onHover]="{
+    value: '',
+    params: {
+      translateXValue: startXOffset(),
+      translateYValue: startYOffset(),
+      scaleXValue: startScaleX(),
+      scaleYValue: startScaleY()
+    }
+  }"
+  (@onHover.start)="onAnimationEvent($event)"
+  (@onHover.done)="onAnimationEvent($event)"
+  [ngStyle]="currentStylesContainer()"
+>
+  <div class="preview-modal-content" [ngStyle]="currentStylesContent()">
+    @if (isPreviewVisible) {
+      <video
+        class="preview-video"
+        [src]="video().video_file"
+        autoplay
+        [muted]="'muted'"
+      ></video>
+    } @else {
+      <img [src]="video().thumbnail_file" alt="" class="preview-thumbnail" />
+    }
+  </div>
+  <div class="preview-modal-info-container" @onHoverChild>
+    <div class="preview-modal-buttons-left-container">
+      <a class="preview-modal-buttons" [routerLink]="['/watch', video().id]">
+        <img src="play-24.png" alt="Play Icon" />
+      </a>
+      <button class="preview-modal-buttons">List</button>
+      <button class="preview-modal-buttons">Like</button>
+    </div>
+    <button class="preview-modal-buttons">Info</button>
+  </div>
+</div>
