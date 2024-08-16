@@ -1,4 +1,11 @@
-import { Component, HostListener, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  HostListener,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { searchFieldTransition } from '../shared/animations';
@@ -14,6 +21,7 @@ import { searchFieldTransition } from '../shared/animations';
 export class SearchComponent {
   openSearch = signal(false);
   private wasInside = false;
+  private searchInput = viewChild<ElementRef>('searchInput');
 
   @HostListener('click', ['$event'])
   clickInside() {
@@ -26,5 +34,13 @@ export class SearchComponent {
       this.openSearch.set(false);
     }
     this.wasInside = false;
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.openSearch()) {
+        this.searchInput()?.nativeElement.focus();
+      }
+    });
   }
 }
