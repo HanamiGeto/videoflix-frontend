@@ -1,4 +1,3 @@
-import { AnimationEvent } from '@angular/animations';
 import {
   Component,
   ElementRef,
@@ -168,11 +167,5 @@ export class CarouselComponent {
     }
     this.startScaleX = scaleX;
     this.startScaleY = scaleY;
-  }
-
-  onAnimationEvent(event: AnimationEvent): void {
-    if (event.phaseName === 'done') {
-      this.isPreviewVisible = !this.isPreviewVisible;
-    }
   }
 }
