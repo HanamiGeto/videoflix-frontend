@@ -8,6 +8,7 @@ import { authGuard } from './shared/auth.guard';
 import { WatchComponent } from './watch/watch.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { MyListComponent } from './my-list/my-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: PasswordResetComponent },
   { path: 'browse', component: BrowseComponent, canActivate: [authGuard] },
+  { path: 'my-list', component: MyListComponent, canActivate: [authGuard] },
   {
     path: 'watch/:id',
     component: WatchComponent,
