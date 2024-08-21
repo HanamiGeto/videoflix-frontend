@@ -30,7 +30,9 @@
       <a class="preview-modal-buttons" [routerLink]="['/watch', video().id]">
         <img src="play-24.png" alt="Play Icon" />
       </a>
-      <button class="preview-modal-buttons">List</button>
+      <button class="preview-modal-buttons" (click)="updateVideoList(video())">
+        List
+      </button>
       <button class="preview-modal-buttons">Like</button>
     </div>
     <button class="preview-modal-buttons">Info</button>

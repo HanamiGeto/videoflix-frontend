@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { previewModalAnimation } from '../shared/animations';
 import { Video } from '../shared/video';
 import { AnimationEvent } from '@angular/animations';
 import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { VideoService } from '../shared/video.service';
 
 @Component({
   selector: 'vf-preview-modal',
@@ -22,10 +23,17 @@ export class PreviewModalComponent {
   currentStylesContainer = input.required<Record<string, string>>();
   currentStylesContent = input.required<Record<string, string>>();
   isPreviewVisible = false;
+  private videoService = inject(VideoService);
 
   onAnimationEvent(event: AnimationEvent): void {
     if (event.phaseName === 'done') {
       this.isPreviewVisible = !this.isPreviewVisible;
     }
+  }
+
+  updateVideoList(video: Video): void {
+    this.videoService.updateMyList(video).subscribe((updatedVideoList) => {
+      console.log(updatedVideoList);
+    });
   }
 }
