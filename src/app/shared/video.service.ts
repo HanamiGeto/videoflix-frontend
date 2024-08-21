@@ -23,4 +23,17 @@ export class VideoService {
   getSingle(id: number): Observable<Video> {
     return this.http.get<Video>(`${this.apiUrl}content/videos/${id}/`);
   }
+
+  getMyList(): Observable<Video[]> {
+    return this.http.get<Video[]>(`${this.apiUrl}content/my-videos/`).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of([]);
+      }),
+    );
+  }
+
+  updateMyList(video: Video): Observable<Video> {
+    return this.http.patch<Video>(`${this.apiUrl}content/my-videos/`, video);
+  }
 }
