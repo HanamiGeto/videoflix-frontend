@@ -1,1 +1,33 @@
-<p>my-list works!</p>
+<!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
+<vf-header></vf-header>
+<!-- <h1>My List</h1> -->
+@if (videos(); as videos) {
+  <div class="my-list-container">
+    @for (video of videos; track video.id; let i = $index) {
+      <div
+        #video
+        class="card"
+        [id]="video.id"
+        (mouseover)="displayPreviewModal(video.id, i)"
+        (mouseout)="clearTime()"
+      >
+        <img [src]="video.thumbnail_file" alt="" />
+      </div>
+    }
+    @if (showPreviewOnHover()) {
+      @if (video$ | async; as video) {
+        <vf-preview-modal
+          [video]="video"
+          [startXOffset]="startXOffset"
+          [startYOffset]="startYOffset"
+          [startScaleX]="startScaleX"
+          [startScaleY]="startScaleY"
+          [currentStylesContainer]="currentStylesContainer"
+          [currentStylesContent]="currentStylesContent"
+          (mouseleave)="showPreviewOnHover.set(false)"
+        ></vf-preview-modal>
+      }
+    }
+  </div>
+}
+<vf-footer></vf-footer>
