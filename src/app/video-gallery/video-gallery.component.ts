@@ -65,7 +65,7 @@ export class VideoGalleryComponent {
   initializeSwiper(): void {
     if (this.swiper()) {
       new Swiper(this.swiper()!.nativeElement, {
-        slidesPerView: this.enableSwiper() ? 6 : 5,
+        slidesPerView: 6,
         slidesPerGroup: 6,
         loop: this.enableSwiper() ? true : false,
         spaceBetween: 6,

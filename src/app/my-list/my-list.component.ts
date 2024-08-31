@@ -28,7 +28,7 @@ export class MyListComponent {
       .getMyList()
       .pipe(
         mergeMap((videos) => from(videos)),
-        bufferCount(5),
+        bufferCount(6),
         toArray(),
       ),
   );
