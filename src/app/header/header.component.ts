@@ -12,7 +12,7 @@ import { SearchComponent } from '../search/search.component';
 })
 export class HeaderComponent {
   private authService = inject(AuthService);
-  private router = inject(Router);
+  router = inject(Router);
   isScrolled = false;
 
   @HostListener('window:scroll', ['$event'])

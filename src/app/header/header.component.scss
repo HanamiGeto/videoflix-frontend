@@ -8,7 +8,7 @@
 
 nav {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 15px 40px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 10%, transparent);
   transition: all 500ms ease-out;
@@ -44,4 +44,16 @@ nav {
 .active {
   color: white !important;
   font-weight: 500;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sub-header {
+  font-size: 2.5rem;
+  padding: 26px 0;
 }

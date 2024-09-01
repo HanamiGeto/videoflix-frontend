@@ -1,24 +1,29 @@
 <nav [class.scrolled-nav]="isScrolled">
-  <div>
-    <a routerLink="/browse">
-      <img src="logo.svg" alt="Videoflix Logo" />
-    </a>
-    <a
-      routerLink="/browse"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >Home</a
-    >
-    <a
-      routerLink="/my-list"
-      routerLinkActive="active"
-      ariaCurrentWhenActive="page"
-      >My List</a
-    >
+  <div class="nav-container">
+    <div>
+      <a routerLink="/browse">
+        <img src="logo.svg" alt="Videoflix Logo" />
+      </a>
+      <a
+        routerLink="/browse"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >Home</a
+      >
+      <a
+        routerLink="/my-list"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+        >My List</a
+      >
+    </div>
+    <div>
+      <vf-search></vf-search>
+      <span>User</span>
+      <button (click)="logout()">Logout</button>
+    </div>
   </div>
-  <div>
-    <vf-search></vf-search>
-    <span>User</span>
-    <button (click)="logout()">Logout</button>
-  </div>
+  @if (router.url === "/my-list") {
+    <div class="sub-header">My List</div>
+  }
 </nav>
