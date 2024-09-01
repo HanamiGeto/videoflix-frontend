@@ -1,10 +1,12 @@
 <vf-header></vf-header>
 @if (videos(); as videos) {
-  @for (video of videos; track $index) {
-    <vf-video-gallery
-      [enableSwiper]="false"
-      [videoSource]="video"
-    ></vf-video-gallery>
-  }
+  <div class="my-list-container">
+    @for (video of videos; track $index) {
+      <vf-video-gallery
+        [enableSwiper]="false"
+        [videoSource]="video"
+      ></vf-video-gallery>
+    }
+  </div>
 }
 <vf-footer></vf-footer>

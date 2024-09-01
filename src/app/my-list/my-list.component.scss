@@ -6,30 +6,10 @@
 }
 
 .my-list-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
-  gap: 50px 6px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
-  .card {
-    // width on fullscreen = 300px
-    // height on fullscreen = 170px
-    display: flex;
-    background-color: black;
-    height: 150px;
-    width: 300px;
-    border-radius: 5px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    border: 1px green solid;
-    box-sizing: border-box;
-
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      border-radius: 5px;
-    }
+  &:first-of-type {
+    margin-top: 160px;
   }
 }
