@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { Video } from './video';
 
 @Injectable({
@@ -35,5 +35,11 @@ export class VideoService {
 
   updateMyList(video: Video): Observable<Video> {
     return this.http.patch<Video>(`${this.apiUrl}content/my-videos/`, video);
+  }
+
+  isVideoInMyList(videoId: number): Observable<boolean> {
+    return this.getMyList().pipe(
+      map((videos) => videos.some((video) => video.id === videoId)),
+    );
   }
 }
