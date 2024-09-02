@@ -5,11 +5,12 @@ import { AnimationEvent } from '@angular/animations';
 import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { VideoService } from '../shared/video.service';
+import { TooltipDirective } from '../shared/tooltip.directive';
 
 @Component({
   selector: 'vf-preview-modal',
   standalone: true,
-  imports: [NgStyle, RouterLink],
+  imports: [NgStyle, RouterLink, TooltipDirective],
   templateUrl: './preview-modal.component.html',
   styleUrl: './preview-modal.component.scss',
   animations: [previewModalAnimation],
