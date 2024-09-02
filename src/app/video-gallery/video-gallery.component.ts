@@ -49,14 +49,17 @@ export class VideoGalleryComponent {
 
   videos: Signal<Video[]> = computed(() => {
     const videos = this.videoSource();
-    return videos!.filter((video) =>
+    if (!videos || videos.length === 0) {
+      return [];
+    }
+    return videos.filter((video) =>
       this.videoGenre() ? video.genre_display === this.videoGenre() : true,
     );
   });
 
   constructor() {
     effect(() => {
-      if (this.videos()) {
+      if (this.videos() && this.videos().length > 0) {
         this.initializeSwiper();
       }
     });
