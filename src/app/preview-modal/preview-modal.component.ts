@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { previewModalAnimation } from '../shared/animations';
 import { Video } from '../shared/video';
 import { AnimationEvent } from '@angular/animations';
@@ -24,6 +24,19 @@ export class PreviewModalComponent {
   currentStylesContent = input.required<Record<string, string>>();
   isPreviewVisible = false;
   private videoService = inject(VideoService);
+  isVideoInMyList = signal(false);
+
+  constructor() {
+    effect(() => {
+      if (this.video()) {
+        this.videoService
+          .isVideoInMyList(this.video().id)
+          .subscribe((isInList) => {
+            this.isVideoInMyList.set(isInList);
+          });
+      }
+    });
+  }
 
   onAnimationEvent(event: AnimationEvent): void {
     if (event.phaseName === 'done') {
@@ -32,8 +45,12 @@ export class PreviewModalComponent {
   }
 
   updateVideoList(video: Video): void {
-    this.videoService.updateMyList(video).subscribe((updatedVideoList) => {
-      console.log(updatedVideoList);
+    this.videoService.updateMyList(video).subscribe(() => {
+      if (this.isVideoInMyList()) {
+        this.isVideoInMyList.set(false);
+      } else {
+        this.isVideoInMyList.set(true);
+      }
     });
   }
 }
