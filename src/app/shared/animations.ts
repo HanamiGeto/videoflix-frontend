@@ -2,6 +2,7 @@ import {
   animate,
   animateChild,
   query,
+  state,
   style,
   transition,
   trigger,
@@ -64,6 +65,22 @@ export const searchFieldTransition = [
     transition(':enter', [
       style({ width: 0 + 'px' }),
       animate('350ms ease-out'),
+    ]),
+  ]),
+];
+
+export const toastAnimation = [
+  trigger('toastTrigger', [
+    state('void', style({ transform: 'translateY(100%)' })),
+    state('*', style({ transform: 'translateY(0)' })),
+
+    transition(':enter', [
+      style({ transform: 'translateY(100%)' }),
+      animate('300ms ease-in-out'),
+    ]),
+
+    transition(':leave', [
+      animate('300ms ease-in-out', style({ transform: 'translateY(100%)' })),
     ]),
   ]),
 ];
