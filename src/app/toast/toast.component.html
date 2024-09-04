@@ -1,0 +1,6 @@
+@if (toast) {
+  <div class="toast" @toastTrigger>
+    <span>{{ toast.text }}</span>
+    <button (click)="removeToast()">✖</button>
+  </div>
+}
