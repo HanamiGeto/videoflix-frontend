@@ -1,4 +1,5 @@
 import {
+  ComponentRef,
   Directive,
   effect,
   HostListener,
@@ -19,6 +20,7 @@ export class TooltipDirective {
   private hover = signal(false);
   private rectLeft = 0;
   private rectTop = 0;
+  private tooltipRef: ComponentRef<TooltipComponent> | null = null;
 
   @HostListener('mouseenter') onMouseEnter() {
     this.hover.set(true);
@@ -27,6 +29,7 @@ export class TooltipDirective {
 
   @HostListener('mouseleave') onMouseLeave() {
     this.hover.set(false);
+    this.tooltipRef = null;
   }
 
   constructor() {
@@ -47,9 +50,11 @@ export class TooltipDirective {
   }
 
   updateToolTip() {
-    const tooltipRef = this.viewContainer.createComponent(TooltipComponent);
-    tooltipRef.setInput('tooltip', this.tooltip());
-    tooltipRef.instance.left = this.rectLeft + 20;
-    tooltipRef.instance.top = this.rectTop - 42;
+    if (!this.tooltipRef) {
+      this.tooltipRef = this.viewContainer.createComponent(TooltipComponent);
+    }
+    this.tooltipRef.setInput('tooltip', this.tooltip());
+    this.tooltipRef.instance.left = this.rectLeft + 20;
+    this.tooltipRef.instance.top = this.rectTop - 42;
   }
 }
