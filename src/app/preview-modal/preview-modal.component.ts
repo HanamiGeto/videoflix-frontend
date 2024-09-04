@@ -6,6 +6,7 @@ import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { VideoService } from '../shared/video.service';
 import { TooltipDirective } from '../shared/tooltip.directive';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'vf-preview-modal',
@@ -25,6 +26,7 @@ export class PreviewModalComponent {
   currentStylesContent = input.required<Record<string, string>>();
   isPreviewVisible = false;
   private videoService = inject(VideoService);
+  private toastService = inject(ToastService);
   isVideoInMyList = signal(false);
 
   constructor() {
@@ -52,6 +54,13 @@ export class PreviewModalComponent {
       } else {
         this.isVideoInMyList.set(true);
       }
+    });
+  }
+
+  showNotification() {
+    this.toastService.showToast({
+      text: `${this.video().title} was removed from your List.`,
+      // type: 'success'
     });
   }
 }
