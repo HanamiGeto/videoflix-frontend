@@ -1,6 +1,9 @@
 @if (toast) {
   <div class="toast" @toastTrigger>
-    <span>{{ toast.text }}</span>
-    <button (click)="removeToast()">✖</button>
+    <span [innerHTML]="toast.text"></span>
+    <button (click)="removeToast()">
+      <img src="undo-2-16.png" alt="" />
+      Undo
+    </button>
   </div>
 }

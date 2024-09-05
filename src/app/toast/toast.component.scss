@@ -3,6 +3,9 @@
 }
 
 .toast {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   bottom: 20px;
   left: 0;
@@ -14,10 +17,12 @@
   // min-width: 500px;
   background-color: whitesmoke;
   color: #141414;
-  padding: 15px;
+  padding: 15px 30px;
   border-radius: 30px;
   // transform: translateX(-50%);
   z-index: 99;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
 // .toast.success {
@@ -40,6 +45,10 @@
   background: none;
   border: none;
   color: #141414;
-  font-size: 1.2em;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
