@@ -59,7 +59,7 @@ export class PreviewModalComponent {
 
   showNotification() {
     this.toastService.showToast({
-      text: `${this.video().title} was removed from your List.`,
+      text: `<strong>${this.video().title}</strong> was removed from your List.`,
       // type: 'success'
     });
   }
