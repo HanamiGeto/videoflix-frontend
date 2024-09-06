@@ -52,12 +52,21 @@ export class VideoGalleryComponent {
   );
 
   videos: Signal<Video[]> = computed(() => {
-    const videos = this.videoSource();
-    if (!videos || videos.length === 0) {
+    const allVideos = this.videoSource();
+    const genre = this.videoGenre();
+    const filteredVideos = allVideos?.filter((video) =>
+      genre ? video.genre_display === genre : true,
+    );
+
+    if (!filteredVideos || filteredVideos.length === 0) {
       return [];
     }
-    return videos.filter((video) =>
-      this.videoGenre() ? video.genre_display === this.videoGenre() : true,
+
+    return filteredVideos.filter(
+      (video) =>
+        !this.removedVideos().some(
+          (removedVideo) => removedVideo.id === video.id,
+        ),
     );
   });
 
@@ -87,6 +96,11 @@ export class VideoGalleryComponent {
         },
       });
     }
+  }
+
+  removeVideo(video: Video): void {
+    this.removedVideos.set([...this.removedVideos(), video]);
+    this.showUndoToast(video, 5000);
   }
 
   showUndoToast(video: Video, duration: number) {
