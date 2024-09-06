@@ -23,4 +23,11 @@ export class ToastComponent implements OnInit {
   removeToast() {
     this.toastService.clearToast();
   }
+
+  undoAction() {
+    if (this.toast?.undoCallback) {
+      this.toast.undoCallback();
+    }
+    this.removeToast();
+  }
 }

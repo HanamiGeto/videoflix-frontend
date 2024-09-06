@@ -1,7 +1,7 @@
 @if (toast) {
   <div class="toast" @toastTrigger>
     <span [innerHTML]="toast.text"></span>
-    <button (click)="removeToast()">
+    <button (click)="undoAction()">
       <img src="undo-2-16.png" alt="" />
       Undo
     </button>
