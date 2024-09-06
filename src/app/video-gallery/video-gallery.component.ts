@@ -17,6 +17,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { PreviewModalComponent } from '../preview-modal/preview-modal.component';
 import { AsyncPipe } from '@angular/common';
 import Swiper from 'swiper/bundle';
+import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'vf-video-gallery',
@@ -35,9 +36,12 @@ export class VideoGalleryComponent {
   currentStylesContainer: Record<string, string> = {};
   currentStylesContent: Record<string, string> = {};
   private readonly videoService = inject(VideoService);
+  private toastService = inject(ToastService);
   videoGenre = input<string>();
   enableSwiper = input.required<boolean>();
   videoSource = input.required<Video[] | undefined>();
+  private removedVideos = signal<Video[]>([]);
+  private undoRemovedVideo = signal(false);
   startXOffset = 0;
   startYOffset = 0;
   startScaleX = 0;
@@ -83,6 +87,32 @@ export class VideoGalleryComponent {
         },
       });
     }
+  }
+
+  showUndoToast(video: Video, duration: number) {
+    this.toastService.showToast({
+      text: `<strong>${video.title}</strong> was removed from your List.`,
+      undoCallback: () => this.undoRemove(video),
+    });
+
+    setTimeout(() => {
+      if (!this.undoRemovedVideo()) {
+        this.finalRemoveFromList(video);
+      }
+    }, duration);
+  }
+
+  finalRemoveFromList(video: Video): void {
+    this.videoService.updateMyList(video).subscribe(() => {
+      console.log(`${video.title} wurde endgültig entfernt`);
+    });
+  }
+
+  undoRemove(video: Video): void {
+    this.removedVideos.set(
+      this.removedVideos().filter((v) => v.id !== video.id),
+    );
+    this.undoRemovedVideo.set(true);
   }
 
   displayPreviewModal(videoId: number, index: number): void {
