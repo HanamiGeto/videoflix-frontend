@@ -5,6 +5,7 @@ export interface ToastMessage {
   text: string;
   type?: 'success' | 'error' | 'info' | 'warning';
   duration?: number;
+  undoCallback?: () => void;
 }
 
 @Injectable({
