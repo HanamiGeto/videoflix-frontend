@@ -1,4 +1,11 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { previewModalAnimation } from '../shared/animations';
 import { Video } from '../shared/video';
 import { AnimationEvent } from '@angular/animations';
@@ -17,6 +24,7 @@ import { ToastService } from '../shared/toast.service';
   animations: [previewModalAnimation],
 })
 export class PreviewModalComponent {
+  videoRemoved = output<Video>();
   video = input.required<Video>();
   startXOffset = input.required<number>();
   startYOffset = input.required<number>();
