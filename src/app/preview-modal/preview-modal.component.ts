@@ -10,10 +10,9 @@ import { previewModalAnimation } from '../shared/animations';
 import { Video } from '../shared/video';
 import { AnimationEvent } from '@angular/animations';
 import { NgStyle } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { VideoService } from '../shared/video.service';
 import { TooltipDirective } from '../shared/tooltip.directive';
-import { ToastService } from '../shared/toast.service';
 
 @Component({
   selector: 'vf-preview-modal',
@@ -34,7 +33,7 @@ export class PreviewModalComponent {
   currentStylesContent = input.required<Record<string, string>>();
   isPreviewVisible = false;
   private videoService = inject(VideoService);
-  private toastService = inject(ToastService);
+  private router = inject(Router);
   isVideoInMyList = signal(false);
 
   constructor() {
@@ -56,19 +55,24 @@ export class PreviewModalComponent {
   }
 
   updateVideoList(video: Video): void {
-    this.videoService.updateMyList(video).subscribe(() => {
-      if (this.isVideoInMyList()) {
-        this.isVideoInMyList.set(false);
-      } else {
-        this.isVideoInMyList.set(true);
-      }
-    });
+    const isInMyList = this.isVideoInMyList();
+    const isNotOnBrowsePage = this.router.url !== '/browse';
+
+    if (isInMyList && isNotOnBrowsePage) {
+      this.removeFromList(video);
+      return;
+    }
+
+    this.toggleVideoInList(video, isInMyList);
   }
 
-  showNotification() {
-    this.toastService.showToast({
-      text: `<strong>${this.video().title}</strong> was removed from your List.`,
-      // type: 'success'
-    });
+  private removeFromList(video: Video): void {
+    this.isVideoInMyList.set(false);
+    this.videoRemoved.emit(video);
+  }
+
+  private toggleVideoInList(video: Video, isInMyList: boolean): void {
+    this.isVideoInMyList.set(!isInMyList);
+    this.videoService.updateMyList(video).subscribe();
   }
 }
