@@ -5,6 +5,8 @@
       <vf-video-gallery
         [enableSwiper]="false"
         [videoSource]="video"
+        (videoRemoved)="handleVideoRemoved($event)"
+        (videoRestored)="restoreRemovedVideo($event)"
       ></vf-video-gallery>
     }
   </div>

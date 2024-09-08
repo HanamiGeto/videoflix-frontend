@@ -5,6 +5,7 @@ import {
   ElementRef,
   inject,
   input,
+  output,
   Signal,
   signal,
   viewChild,
@@ -40,6 +41,8 @@ export class VideoGalleryComponent {
   videoGenre = input<string>();
   enableSwiper = input.required<boolean>();
   videoSource = input.required<Video[] | undefined>();
+  videoRemoved = output<Video>();
+  videoRestored = output<Video>();
   private undoRemovedVideo = signal(false);
   startXOffset = 0;
   startYOffset = 0;
@@ -89,29 +92,30 @@ export class VideoGalleryComponent {
   }
 
   removeVideo(video: Video): void {
+    this.videoRemoved.emit(video);
+    this.undoRemovedVideo.set(false);
     this.showUndoToast(video, 5000);
   }
 
   showUndoToast(video: Video, duration: number) {
     this.toastService.showToast({
       text: `<strong>${video.title}</strong> was removed from your List.`,
-      undoCallback: () => this.undoRemove(video),
+      undoCallback: () => this.restoreRemovedVideo(video),
     });
 
     setTimeout(() => {
       if (!this.undoRemovedVideo()) {
-        this.finalRemoveFromList(video);
+        this.commitVideoRemoval(video);
       }
     }, duration);
   }
 
-  finalRemoveFromList(video: Video): void {
-    this.videoService.updateMyList(video).subscribe(() => {
-      console.log(`${video.title} wurde endgültig entfernt`);
-    });
+  commitVideoRemoval(video: Video): void {
+    this.videoService.updateMyList(video).subscribe();
   }
 
-  undoRemove(video: Video): void {
+  restoreRemovedVideo(video: Video): void {
+    this.videoRestored.emit(video);
     this.undoRemovedVideo.set(true);
   }
 
