@@ -92,6 +92,7 @@ export class VideoGalleryComponent {
   }
 
   removeVideo(video: Video): void {
+    this.showPreviewOnHover.set(false);
     this.videoRemoved.emit(video);
     this.undoRemovedVideo.set(false);
     this.showUndoToast(video, 5000);
