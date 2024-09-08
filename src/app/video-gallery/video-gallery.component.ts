@@ -40,7 +40,6 @@ export class VideoGalleryComponent {
   videoGenre = input<string>();
   enableSwiper = input.required<boolean>();
   videoSource = input.required<Video[] | undefined>();
-  private removedVideos = signal<Video[]>([]);
   private undoRemovedVideo = signal(false);
   startXOffset = 0;
   startYOffset = 0;
@@ -52,21 +51,12 @@ export class VideoGalleryComponent {
   );
 
   videos: Signal<Video[]> = computed(() => {
-    const allVideos = this.videoSource();
-    const genre = this.videoGenre();
-    const filteredVideos = allVideos?.filter((video) =>
-      genre ? video.genre_display === genre : true,
-    );
-
-    if (!filteredVideos || filteredVideos.length === 0) {
+    const videos = this.videoSource();
+    if (!videos || videos.length === 0) {
       return [];
     }
-
-    return filteredVideos.filter(
-      (video) =>
-        !this.removedVideos().some(
-          (removedVideo) => removedVideo.id === video.id,
-        ),
+    return videos.filter((video) =>
+      this.videoGenre() ? video.genre_display === this.videoGenre() : true,
     );
   });
 
@@ -99,7 +89,6 @@ export class VideoGalleryComponent {
   }
 
   removeVideo(video: Video): void {
-    this.removedVideos.set([...this.removedVideos(), video]);
     this.showUndoToast(video, 5000);
   }
 
@@ -123,9 +112,6 @@ export class VideoGalleryComponent {
   }
 
   undoRemove(video: Video): void {
-    this.removedVideos.set(
-      this.removedVideos().filter((v) => v.id !== video.id),
-    );
     this.undoRemovedVideo.set(true);
   }
 
