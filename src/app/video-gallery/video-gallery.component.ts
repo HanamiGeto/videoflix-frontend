@@ -92,23 +92,34 @@ export class VideoGalleryComponent {
   }
 
   removeVideo(video: Video): void {
-    this.showPreviewOnHover.set(false);
+    const videoIndex = this.findVideoIndex(video);
+
+    if (videoIndex !== -1) {
+      this.showUndoToast(video);
+      setTimeout(() => {
+        if (!this.undoRemovedVideo()) {
+          this.finalizeVideoRemoval(video);
+        }
+      }, 5000);
+    }
     this.videoRemoved.emit(video);
     this.undoRemovedVideo.set(false);
-    this.showUndoToast(video, 5000);
   }
 
-  showUndoToast(video: Video, duration: number) {
+  findVideoIndex(video: Video): number {
+    return this.videos().findIndex((vid) => vid.id === video.id);
+  }
+
+  showUndoToast(video: Video) {
     this.toastService.showToast({
       text: `<strong>${video.title}</strong> was removed from your List.`,
       undoCallback: () => this.restoreRemovedVideo(video),
     });
+  }
 
-    setTimeout(() => {
-      if (!this.undoRemovedVideo()) {
-        this.commitVideoRemoval(video);
-      }
-    }, duration);
+  finalizeVideoRemoval(video: Video): void {
+    this.videoRemoved.emit(video);
+    this.commitVideoRemoval(video);
   }
 
   commitVideoRemoval(video: Video): void {
