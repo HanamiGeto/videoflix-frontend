@@ -25,6 +25,7 @@ import { TooltipDirective } from '../shared/tooltip.directive';
 export class PreviewModalComponent {
   videoRemoved = output<VideoWithAnimationState>();
   video = input.required<VideoWithAnimationState>();
+  animationDisabled = input.required<boolean>();
   startXOffset = input.required<number>();
   startYOffset = input.required<number>();
   startScaleX = input.required<number>();

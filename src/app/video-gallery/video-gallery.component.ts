@@ -52,6 +52,7 @@ export class VideoGalleryComponent {
   startYOffset = 0;
   startScaleX = 0;
   startScaleY = 0;
+  disablePreviewModalAnimation = signal(false);
 
   video$: Observable<VideoWithAnimationState> = toObservable(
     this.hoveredVideoId,
@@ -117,6 +118,7 @@ export class VideoGalleryComponent {
         }
       }, 5000);
     }
+    this.disablePreviewModalAnimation.set(true);
     this.videoRemoved.emit(video);
     this.undoRemovedVideo.set(false);
   }
@@ -144,6 +146,7 @@ export class VideoGalleryComponent {
   restoreRemovedVideo(video: VideoWithAnimationState): void {
     this.videoRestored.emit(video);
     this.undoRemovedVideo.set(true);
+    this.disablePreviewModalAnimation.set(false);
   }
 
   displayPreviewModal(videoId: number, index: number): void {

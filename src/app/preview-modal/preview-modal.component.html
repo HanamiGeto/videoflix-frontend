@@ -1,5 +1,6 @@
 <div
   class="preview-modal-container"
+  [@.disabled]="animationDisabled()"
   [@onHover]="{
     value: '',
     params: {
@@ -44,6 +45,8 @@
       </button>
       <!-- <button class="preview-modal-buttons">Like</button> -->
     </div>
-    <button class="preview-modal-buttons">Info</button>
+    <!-- <button class="preview-modal-buttons" (click)="showUndoToast()">
+      Info
+    </button> -->
   </div>
 </div>

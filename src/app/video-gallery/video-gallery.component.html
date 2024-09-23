@@ -32,6 +32,7 @@
           [currentStylesContent]="currentStylesContent"
           (mouseleave)="showPreviewOnHover.set(false)"
           (videoRemoved)="removeVideo($event)"
+          [animationDisabled]="disablePreviewModalAnimation()"
         ></vf-preview-modal>
       }
     }
