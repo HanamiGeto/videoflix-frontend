@@ -17,3 +17,7 @@ export interface VideoResolutions {
   _720p: string;
   _360p: string;
 }
+
+export interface VideoWithAnimationState extends Video {
+  state: 'normal' | 'removed' | 'shift' | 'nextRowRemoved';
+}

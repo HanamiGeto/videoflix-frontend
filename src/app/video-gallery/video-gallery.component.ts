@@ -12,8 +12,8 @@ import {
   viewChildren,
 } from '@angular/core';
 import { VideoService } from '../shared/video.service';
-import { Observable, switchMap } from 'rxjs';
-import { Video } from '../shared/video';
+import { map, Observable, switchMap } from 'rxjs';
+import { Video, VideoWithAnimationState } from '../shared/video';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { PreviewModalComponent } from '../preview-modal/preview-modal.component';
 import { AsyncPipe } from '@angular/common';
@@ -40,20 +40,33 @@ export class VideoGalleryComponent {
   private toastService = inject(ToastService);
   videoGenre = input<string>();
   enableSwiper = input.required<boolean>();
-  videoSource = input.required<Video[] | undefined>();
-  videoRemoved = output<Video>();
-  videoRestored = output<Video>();
+  videoSource = input.required<
+    Video[] | VideoWithAnimationState[] | undefined | null
+  >();
+  videoRemoved = output<VideoWithAnimationState>();
+  videoRestored = output<VideoWithAnimationState>();
   private undoRemovedVideo = signal(false);
   startXOffset = 0;
   startYOffset = 0;
   startScaleX = 0;
   startScaleY = 0;
 
-  video$: Observable<Video> = toObservable(this.hoveredVideoId).pipe(
-    switchMap((id) => this.videoService.getSingle(id)),
+  video$: Observable<VideoWithAnimationState> = toObservable(
+    this.hoveredVideoId,
+  ).pipe(
+    switchMap((id) =>
+      this.videoService.getSingle(id).pipe(
+        map((video) => {
+          return {
+            ...video,
+            state: 'normal',
+          } as VideoWithAnimationState;
+        }),
+      ),
+    ),
   );
 
-  videos: Signal<Video[]> = computed(() => {
+  videos: Signal<VideoWithAnimationState[] | Video[]> = computed(() => {
     const videos = this.videoSource();
     if (!videos || videos.length === 0) {
       return [];
@@ -91,7 +104,7 @@ export class VideoGalleryComponent {
     }
   }
 
-  removeVideo(video: Video): void {
+  removeVideo(video: VideoWithAnimationState): void {
     const videoIndex = this.findVideoIndex(video);
 
     if (videoIndex !== -1) {
@@ -110,14 +123,14 @@ export class VideoGalleryComponent {
     return this.videos().findIndex((vid) => vid.id === video.id);
   }
 
-  showUndoToast(video: Video) {
+  showUndoToast(video: VideoWithAnimationState) {
     this.toastService.showToast({
       text: `<strong>${video.title}</strong> was removed from your List.`,
       undoCallback: () => this.restoreRemovedVideo(video),
     });
   }
 
-  finalizeVideoRemoval(video: Video): void {
+  finalizeVideoRemoval(video: VideoWithAnimationState): void {
     this.videoRemoved.emit(video);
     this.commitVideoRemoval(video);
   }
@@ -126,7 +139,7 @@ export class VideoGalleryComponent {
     this.videoService.updateMyList(video).subscribe();
   }
 
-  restoreRemovedVideo(video: Video): void {
+  restoreRemovedVideo(video: VideoWithAnimationState): void {
     this.videoRestored.emit(video);
     this.undoRemovedVideo.set(true);
   }

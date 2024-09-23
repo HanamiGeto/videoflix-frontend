@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { previewModalAnimation } from '../shared/animations';
-import { Video } from '../shared/video';
+import { Video, VideoWithAnimationState } from '../shared/video';
 import { AnimationEvent } from '@angular/animations';
 import { NgStyle } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -23,8 +23,8 @@ import { TooltipDirective } from '../shared/tooltip.directive';
   animations: [previewModalAnimation],
 })
 export class PreviewModalComponent {
-  videoRemoved = output<Video>();
-  video = input.required<Video>();
+  videoRemoved = output<VideoWithAnimationState>();
+  video = input.required<VideoWithAnimationState>();
   startXOffset = input.required<number>();
   startYOffset = input.required<number>();
   startScaleX = input.required<number>();
@@ -54,7 +54,7 @@ export class PreviewModalComponent {
     }
   }
 
-  updateVideoList(video: Video): void {
+  updateVideoList(video: VideoWithAnimationState): void {
     const isInMyList = this.isVideoInMyList();
     const isNotOnBrowsePage = this.router.url !== '/browse';
 
@@ -66,7 +66,7 @@ export class PreviewModalComponent {
     this.toggleVideoInList(video, isInMyList);
   }
 
-  private removeFromList(video: Video): void {
+  private removeFromList(video: VideoWithAnimationState): void {
     this.isVideoInMyList.set(false);
     this.videoRemoved.emit(video);
   }
