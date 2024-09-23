@@ -84,3 +84,27 @@ export const toastAnimation = [
     ]),
   ]),
 ];
+
+export const videoListAnimation = [
+  trigger('parent', [
+    transition(':enter', [query('@videoAnimation', animateChild())]),
+    transition(':leave', [query('@videoAnimation', animateChild())]),
+  ]),
+
+  trigger('videoAnimation', [
+    transition('* => shift', [
+      animate('500ms ease-out', style({ transform: 'translateX(-102%)' })),
+    ]),
+    transition('shift => *', [
+      animate('500ms ease-out', style({ transform: 'translateX(102%)' })),
+    ]),
+    transition('void => removed, void => nextRowRemoved', [
+      style({ opacity: 0, scale: 0.95 }),
+      animate('500ms ease-in-out', style({ opacity: 1, scale: 1 })),
+    ]),
+    transition(':leave', [
+      animate('200ms ease-in-out', style({ opacity: 0, scale: 0.95 })),
+      animate('300ms', style({ opacity: 0 })),
+    ]),
+  ]),
+];
