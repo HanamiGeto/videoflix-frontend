@@ -19,6 +19,7 @@ import { PreviewModalComponent } from '../preview-modal/preview-modal.component'
 import { AsyncPipe } from '@angular/common';
 import Swiper from 'swiper/bundle';
 import { ToastService } from '../shared/toast.service';
+import { videoListAnimation } from '../shared/animations';
 
 @Component({
   selector: 'vf-video-gallery',
@@ -26,6 +27,7 @@ import { ToastService } from '../shared/toast.service';
   imports: [PreviewModalComponent, AsyncPipe],
   templateUrl: './video-gallery.component.html',
   styleUrl: './video-gallery.component.scss',
+  animations: [videoListAnimation],
 })
 export class VideoGalleryComponent {
   private readonly swiper = viewChild<ElementRef>('swiper');
@@ -217,5 +219,11 @@ export class VideoGalleryComponent {
     }
     this.startScaleX = scaleX;
     this.startScaleY = scaleY;
+  }
+
+  videoHasState(
+    video: Video | VideoWithAnimationState,
+  ): video is VideoWithAnimationState {
+    return (video as VideoWithAnimationState).state !== undefined;
   }
 }

@@ -1,14 +1,15 @@
 <!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
 @if (videos(); as videos) {
-  <div class="swiper-container">
+  <div class="swiper-container" @parent>
     <div #swiper class="swiper">
       <div class="swiper-wrapper">
-        @for (video of videos; track video.id; let i = $index) {
+        @for (video of videos; track video.id) {
           <div
             #video
+            [@videoAnimation]="videoHasState(video) ? video.state : 'normal'"
             class="swiper-slide card swiper-no-swiping"
             [id]="video.id"
-            (mouseover)="displayPreviewModal(video.id, i)"
+            (mouseover)="displayPreviewModal(video.id, $index)"
             (mouseout)="clearTime()"
           >
             <img [src]="video.thumbnail_file" alt="" />
