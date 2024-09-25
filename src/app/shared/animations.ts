@@ -87,8 +87,12 @@ export const toastAnimation = [
 
 export const videoListAnimation = [
   trigger('parent', [
-    transition(':enter', [query('@videoAnimation', animateChild())]),
-    transition(':leave', [query('@videoAnimation', animateChild())]),
+    transition(':enter', [
+      query('@videoAnimation', animateChild(), { optional: true }),
+    ]),
+    transition(':leave', [
+      query('@videoAnimation', animateChild(), { optional: true }),
+    ]),
   ]),
 
   trigger('videoAnimation', [
