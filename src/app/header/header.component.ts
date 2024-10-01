@@ -2,11 +2,12 @@ import { Component, HostListener, inject } from '@angular/core';
 import { AuthService } from '../shared/auth.service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
+import { UserMenuComponent } from '../user-menu/user-menu.component';
 
 @Component({
   selector: 'vf-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, SearchComponent],
+  imports: [RouterLink, RouterLinkActive, SearchComponent, UserMenuComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
