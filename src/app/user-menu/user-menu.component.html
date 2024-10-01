@@ -1,0 +1,9 @@
+<!-- eslint-disable @angular-eslint/template/mouse-events-have-key-events -->
+<div class="user-dropdown-btn" #test>
+  <img class="profile-icon" src="cat.jpg" alt="Profile Icon" />
+  <img [@openUserMenu]="userMenuActive()" src="arrow-216-10.png" alt="" />
+</div>
+
+@if (userMenuActive()) {
+  <div @open class="dropdown" (mouseover)="clearTime()"></div>
+}
