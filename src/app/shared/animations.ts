@@ -112,3 +112,18 @@ export const videoListAnimation = [
     ]),
   ]),
 ];
+
+export const userMenuAnimation = [
+  trigger('openUserMenu', [
+    state('true', style({ transform: 'rotate(180deg)' })),
+    state('false', style({ height: '*' })),
+    transition('false <=> true', animate('250ms')),
+  ]),
+  trigger('open', [
+    transition(':enter', [
+      style({ opacity: 0 }),
+      animate('250ms', style({ opacity: 1 })),
+    ]),
+    transition(':leave', [animate('250ms', style({ opacity: 0 }))]),
+  ]),
+];
