@@ -1,0 +1,34 @@
+:host {
+  position: relative;
+}
+
+.user-dropdown-btn {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile-icon {
+  height: 32px;
+  width: 32px;
+  border-radius: 5px;
+}
+
+.dropdown {
+  height: 400px;
+  width: 218px;
+  background-color: #141414;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  border: rgba($color: grey, $alpha: 0.5) 1px solid;
+
+  &::before {
+    content: url(../../../public/arrow-216-16.png);
+    position: absolute;
+    top: -18px;
+    right: 27px;
+    transform: rotate(180deg);
+  }
+}
