@@ -1,5 +1,6 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { userMenuAnimation } from '../shared/animations';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'vf-user-menu',
@@ -10,6 +11,7 @@ import { userMenuAnimation } from '../shared/animations';
   animations: [userMenuAnimation],
 })
 export class UserMenuComponent {
+  private authService = inject(AuthService);
   userMenuActive = signal(false);
   private debounceTimeout?: ReturnType<typeof setTimeout>;
 
@@ -24,5 +26,9 @@ export class UserMenuComponent {
 
   clearTime() {
     clearTimeout(this.debounceTimeout);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
