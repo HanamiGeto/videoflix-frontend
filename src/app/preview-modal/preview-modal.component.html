@@ -13,6 +13,7 @@
   (@onHover.start)="onAnimationEvent($event)"
   (@onHover.done)="onAnimationEvent($event)"
   [ngStyle]="currentStylesContainer()"
+  [routerLink]="['/watch', video().id]"
 >
   <div class="preview-modal-content" [ngStyle]="currentStylesContent()">
     @if (isPreviewVisible) {
