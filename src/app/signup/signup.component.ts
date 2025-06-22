@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormErrorsComponent } from '../form-errors/form-errors.component';
-import { customEmailValidator } from '../validators';
+import { customEmailValidator, matchPasswordValidator } from '../validators';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { FooterComponent } from '../footer/footer.component';
@@ -39,6 +39,10 @@ export class SignupComponent {
     password: new FormControl('', {
       nonNullable: true,
       validators: Validators.required,
+    }),
+    password_confirm: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, matchPasswordValidator],
     }),
   });
 

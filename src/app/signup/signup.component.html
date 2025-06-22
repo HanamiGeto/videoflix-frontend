@@ -37,14 +37,33 @@
           formControlName="password"
           type="password"
           id="password"
-          placeholder="Password"
+          placeholder="Enter a password"
           autocomplete="new-password"
         />
-        <label for="password">Password</label>
+        <label for="password">Enter a password</label>
       </div>
       <vf-form-errors
         controlName="password"
         [messages]="{ required: 'Your password is required' }"
+      ></vf-form-errors>
+    </div>
+    <div class="input-container">
+      <div class="input-field">
+        <input
+          formControlName="password_confirm"
+          type="password"
+          id="password_confirm"
+          placeholder="Confirm password"
+          autocomplete="new-password"
+        />
+        <label for="password_confirm">Confirm password</label>
+      </div>
+      <vf-form-errors
+        controlName="password_confirm"
+        [messages]="{
+          required: 'Your password is required',
+          mismatch: 'Passwords must match'
+        }"
       ></vf-form-errors>
     </div>
     <button type="submit">Sign up</button>
