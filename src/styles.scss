@@ -57,6 +57,7 @@
 
 * {
   font-family: "Open Sans";
+  // cursor: default;
 }
 
 html,
@@ -95,6 +96,11 @@ body {
     &:hover {
       opacity: 0.8;
       transition: all 225ms ease-in-out;
+    }
+
+    &:disabled {
+      opacity: 0.1;
+      cursor: unset;
     }
   }
 
