@@ -1,1 +1,28 @@
-<p>landing-page works!</p>
+<div class="header">
+  <img class="logo" src="logo.svg" alt="Videoflix Logo" />
+  <a routerLink="../login">Log in</a>
+</div>
+<div>
+  <h1>Movies, TV shows, and more</h1>
+  <p>Enter your email to create or restart your subscription.</p>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <div class="input-field">
+        <input formControlName="email" id="email" placeholder="Email address" />
+        <label for="email">Email</label>
+      </div>
+      <vf-form-errors
+        controlName="email"
+        [messages]="{
+          required: 'Your email is required',
+          invalidemail: 'Please enter a valid email'
+        }"
+      ></vf-form-errors>
+    </div>
+    <button type="submit">
+      Sign up
+      <img src="arrow-25-16.png" alt="Signup arrow" />
+    </button>
+  </form>
+</div>
+<vf-footer class="footer-form-pages"></vf-footer>
