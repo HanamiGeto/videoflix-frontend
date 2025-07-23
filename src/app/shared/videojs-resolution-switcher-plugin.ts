@@ -147,7 +147,7 @@ export class VideoJsQualityPlugin extends Plugin {
   }
 }
 
-videojs.registerPlugin('qualityPlugin', VideoJsQualityPlugin);
+videojs.registerPlugin('videoQuality', VideoJsQualityPlugin);
 
 declare module 'video.js' {
   export interface VideoJsPlayer {

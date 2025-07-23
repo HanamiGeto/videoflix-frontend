@@ -47,7 +47,7 @@ export class BackButtonPlugin extends Plugin {
   }
 }
 
-videojs.registerPlugin('backButtonPlugin', BackButtonPlugin);
+videojs.registerPlugin('backButton', BackButtonPlugin);
 
 declare module 'video.js' {
   export interface Component {

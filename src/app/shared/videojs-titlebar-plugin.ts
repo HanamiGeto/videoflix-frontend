@@ -53,7 +53,7 @@ export class VideoJsTitleBarPlugin extends Plugin {
   }
 }
 
-videojs.registerPlugin('titleBarPlugin', VideoJsTitleBarPlugin);
+videojs.registerPlugin('titleBar', VideoJsTitleBarPlugin);
 
 declare module 'video.js' {
   export interface VideoJsPlayer {

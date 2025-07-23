@@ -12,6 +12,7 @@ import '../shared/videojs-resolution-switcher-plugin';
 import '../shared/videojs-custom-control-bar';
 import '../shared/videojs-titlebar-plugin';
 import '../shared/videojs-back-button-plugin';
+import '../shared/videojs-skip-buttons-plugin';
 import { Router } from '@angular/router';
 
 @Component({
@@ -60,9 +61,10 @@ export class VjsPlayerComponent implements OnInit, OnDestroy {
       {
         ...this.options(),
         plugins: {
-          qualityPlugin: { sources: this.resolutionSources()?.sources },
-          titleBarPlugin: { title: this.titleBar()?.title },
-          backButtonPlugin: { router: this.router },
+          videoQuality: { sources: this.resolutionSources()?.sources },
+          titleBar: { title: this.titleBar()?.title },
+          backButton: { router: this.router },
+          skipButtons: { forward: 10, backwards: 10 },
         },
         userActions: {
           hotkeys: {
