@@ -490,3 +490,13 @@ input:autofill {
     rgba(0, 0, 0, 0.6278712168461135) 100%
   ) !important;
 }
+
+.vjs-skip-buttons {
+  display: flex;
+  cursor: pointer;
+
+  img {
+    height: 32px;
+    width: 32px;
+  }
+}
