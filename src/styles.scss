@@ -500,3 +500,12 @@ input:autofill {
     width: 32px;
   }
 }
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: unset;
+  border: none;
+  cursor: pointer;
+}
