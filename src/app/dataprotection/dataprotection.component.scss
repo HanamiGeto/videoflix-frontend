@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header img {
+  height: 33px;
+}
+
+.header ~ div {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-self: center;
+}
+
+a {
+  &:link {
+    color: white;
+  }
+
+  &:visited {
+    color: maroon;
+  }
+}
